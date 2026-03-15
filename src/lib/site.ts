@@ -23,8 +23,8 @@ export const siteConfig = {
   dashboardUrl: "https://dashboard.widgetai.youssef.tn/login",
   privacyUrl: "https://dashboard.widgetai.youssef.tn/privacy",
   termsUrl: "https://dashboard.widgetai.youssef.tn/terms",
-  supportEmail: "support@widgetai.dhibi.tn",
-  supportEmailHref: "mailto:support@widgetai.dhibi.tn",
+  supportEmail: "dhibi.ywsf@gmail.com",
+  supportEmailHref: "mailto:dhibi.ywsf@gmail.com",
   embedScriptUrl: "https://api.widgetai.dhibi.tn/widget/embed.js",
 } as const
 
