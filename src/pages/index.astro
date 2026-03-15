@@ -29,7 +29,7 @@ const structuredData = getHomepageStructuredData(
         {/* Eyebrow Label */}
         <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-8 transition-colors hover:bg-primary/20">
           <span class="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-          Meet WidgetAI 2.0
+          Meet WidgetAI 1.0
         </div>
         
         {/* Large Bold Headline */}
@@ -58,27 +58,29 @@ const structuredData = getHomepageStructuredData(
         
         {/* Large Dashboard Preview Anchored at the Bottom */}
         {/* Negative bottom margin forces it to slightly overlap the next section */}
-        <div class="relative w-full max-w-5xl mx-auto -mb-24 sm:-mb-48 lg:-mb-64 z-20">
-          {/* Subtle glow effect behind the dashboard */}
-          <div class="absolute -inset-1 sm:-inset-4 bg-gradient-to-r from-primary/30 to-accent/30 rounded-2xl sm:rounded-[2.5rem] blur-xl sm:blur-2xl opacity-40 -z-10"></div>
-          
-          <div class="rounded-xl sm:rounded-2xl border border-border/50 bg-background/50 p-2 sm:p-4 shadow-2xl backdrop-blur-sm">
-            {/* Desktop Preview */}
-            <img 
-              src="/preview.png" 
-              alt="WidgetAI Dashboard Preview" 
-              width="2766"
-              height="1388"
-              class="hidden sm:block w-full h-auto rounded-lg sm:rounded-xl border border-border/50 shadow-inner object-cover"
-            />
-            {/* Mobile Preview */}
-            <img 
-              src="/preview-mobile.png" 
-              alt="WidgetAI Mobile Dashboard Preview" 
-              width="572"
-              height="1228"
-              class="block sm:hidden w-full h-auto rounded-xl border border-border/50 shadow-inner object-cover"
-            />
+        <div class="relative w-full max-w-5xl mx-auto -mb-24 sm:-mb-48 lg:-mb-64 z-20 dashboard-preview-container" style="perspective: 1000px;">
+          <div id="dashboard-preview" class="relative w-full h-full transition-transform duration-75 ease-out" style="transform: rotateX(15deg) translateY(40px) scale(0.95); opacity: 0;">
+            {/* Subtle glow effect behind the dashboard */}
+            <div class="absolute -inset-1 sm:-inset-4 bg-primary/30 rounded-2xl sm:rounded-[2.5rem] blur-xl sm:blur-2xl opacity-40 -z-10"></div>
+            
+            <div class="rounded-xl sm:rounded-2xl border border-primary/40 bg-background/50 p-1 sm:p-2 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+              {/* Desktop Preview */}
+              <img 
+                src="/preview.png" 
+                alt="WidgetAI Dashboard Preview" 
+                width="2766"
+                height="1388"
+                class="hidden sm:block w-full h-auto rounded-lg sm:rounded-xl border border-primary/20 shadow-inner object-cover"
+              />
+              {/* Mobile Preview */}
+              <img 
+                src="/preview-mobile.png" 
+                alt="WidgetAI Mobile Dashboard Preview" 
+                width="572"
+                height="1228"
+                class="block sm:hidden w-full h-auto rounded-xl border border-primary/20 shadow-inner object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -366,6 +368,32 @@ const structuredData = getHomepageStructuredData(
           }
         });
       });
+
+      // Dashboard Preview Parallax Animation
+      const preview = document.getElementById('dashboard-preview');
+      if (preview) {
+        const handleScroll = () => {
+          const scrollY = window.scrollY;
+          // Calculate progress based on scroll position (0 to 1 over 500px)
+          const progress = Math.min(scrollY / 500, 1);
+          
+          // Animate rotation, translation, scale, and opacity
+          const rotateX = 15 - (progress * 15); // from 15deg to 0deg
+          const translateY = 40 - (progress * 40); // from 40px to 0px
+          const scale = 0.95 + (progress * 0.05); // from 0.95 to 1
+          const opacity = 0.5 + (progress * 0.5); // from 0.5 to 1
+          
+          preview.style.transform = `rotateX(${rotateX}deg) translateY(${translateY}px) scale(${scale})`;
+          preview.style.opacity = progress > 0 ? opacity.toString() : '0.5';
+        };
+
+        window.addEventListener('scroll', () => {
+          requestAnimationFrame(handleScroll);
+        }, { passive: true });
+        
+        // Initial setup on load
+        handleScroll();
+      }
     </script>
   </main>
 
