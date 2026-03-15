@@ -4,7 +4,7 @@ Public landing page for WidgetAI, built with Astro, React, TypeScript, and Tailw
 
 WidgetAI is a product for creating embeddable AI chat widgets for websites. This repository contains only the marketing and landing page that presents the product. The dashboard, backend, embeddable widget runtime, and AI infrastructure are closed source and are not included here.
 
-![WidgetAI landing page preview](public/og-img.png)
+![WidgetAI landing page preview](src/assets/og-img.png)
 
 ## Live URLs
 
@@ -20,7 +20,7 @@ This repository includes:
 - Responsive navigation and mobile menu behavior
 - Feature highlights and FAQ content
 - SEO metadata, social sharing tags, structured data, sitemap support, and robots handling
-- Public static assets such as logos, preview images, and favicons
+- Source-managed image assets and public favicon files
 
 This repository does not include:
 
@@ -56,8 +56,9 @@ This repository does not include:
 
 ```text
 .
-├── public/              # Images, previews, logos, favicons
+├── public/              # Favicons, manifest, and browser-discoverable public files
 ├── src/
+│   ├── assets/          # Landing page images managed by Astro
 │   ├── components/      # React and UI components
 │   ├── layouts/         # Shared Astro layout
 │   ├── lib/             # Site config and shared helpers

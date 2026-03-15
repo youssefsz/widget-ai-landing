@@ -1,3 +1,6 @@
+import ogImage from "@/assets/og-img.png"
+import logoImage from "@/assets/logo.png"
+
 export const siteConfig = {
   name: "WidgetAI",
   siteUrl: "https://widgetai.youssef.tn",
@@ -17,9 +20,9 @@ export const siteConfig = {
     "custom AI widget",
     "widget installation",
   ],
-  ogImage: "/og-img.png",
+  ogImage,
   ogImageAlt: "WidgetAI dashboard preview and embeddable website chat widget",
-  logo: "/logo.png",
+  logo: logoImage,
   dashboardUrl: "https://dashboard.widgetai.youssef.tn/login",
   privacyUrl: "https://dashboard.widgetai.youssef.tn/privacy",
   termsUrl: "https://dashboard.widgetai.youssef.tn/terms",
@@ -64,8 +67,8 @@ export function getAbsoluteUrl(path: string, site: URL) {
 
 export function getHomepageStructuredData(site: URL): StructuredData[] {
   const homepageUrl = getAbsoluteUrl("/", site)
-  const logoUrl = getAbsoluteUrl(siteConfig.logo, site)
-  const imageUrl = getAbsoluteUrl(siteConfig.ogImage, site)
+  const logoUrl = getAbsoluteUrl(siteConfig.logo.src, site)
+  const imageUrl = getAbsoluteUrl(siteConfig.ogImage.src, site)
 
   return [
     {

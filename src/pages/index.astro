@@ -1,7 +1,12 @@
 ---
+import { Image } from "astro:assets"
 import Layout from "@/layouts/main.astro"
 import { Navbar } from "@/components/Navbar"
 import { Button } from "@/components/ui/button"
+import logoImage from "@/assets/logo.png"
+import previewImage from "@/assets/preview.png"
+import previewMobileImage from "@/assets/preview-mobile.png"
+import widgetPreviewImage from "@/assets/widget-preview.png"
 import {
   faqItems,
   getHomepageStructuredData,
@@ -65,19 +70,15 @@ const structuredData = getHomepageStructuredData(
             
             <div class="rounded-xl sm:rounded-2xl border border-primary/40 bg-background/50 p-1 sm:p-2 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
               {/* Desktop Preview */}
-              <img 
-                src="/preview.png" 
-                alt="WidgetAI Dashboard Preview" 
-                width="2766"
-                height="1388"
+              <Image
+                src={previewImage}
+                alt="WidgetAI Dashboard Preview"
                 class="hidden sm:block w-full h-auto rounded-lg sm:rounded-xl border border-primary/20 shadow-inner object-cover"
               />
               {/* Mobile Preview */}
-              <img 
-                src="/preview-mobile.png" 
-                alt="WidgetAI Mobile Dashboard Preview" 
-                width="572"
-                height="1228"
+              <Image
+                src={previewMobileImage}
+                alt="WidgetAI Mobile Dashboard Preview"
                 class="block sm:hidden w-full h-auto rounded-xl border border-primary/20 shadow-inner object-cover"
               />
             </div>
@@ -166,13 +167,11 @@ const structuredData = getHomepageStructuredData(
 
             {/* Widget Preview Image Right */}
             <div class="md:w-1/2 w-full flex justify-center items-center group-hover:scale-[1.03] transition-transform duration-500 ease-out">
-              <img 
-                src="/widget-preview.png" 
-                alt="Widget Preview" 
-                width="638"
-                height="1158"
+              <Image
+                src={widgetPreviewImage}
+                alt="Widget Preview"
                 loading="lazy"
-                class="w-full max-w-[320px] h-auto object-contain drop-shadow-2xl rounded-2xl" 
+                class="w-full max-w-[320px] h-auto object-contain drop-shadow-2xl rounded-2xl"
               />
             </div>
           </div>
@@ -454,7 +453,7 @@ const structuredData = getHomepageStructuredData(
         {/* Brand & Description */}
         <div class="max-w-sm">
           <a href="/" class="flex items-center gap-2 mb-5 outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm w-fit">
-            <img src="/logo.png" alt="WidgetAI Logo" width="833" height="217" class="h-8 w-auto object-contain" />
+            <Image src={logoImage} alt="WidgetAI Logo" class="h-8 w-auto object-contain" />
           </a>
           <p class="text-sm text-muted-foreground leading-relaxed">
             Add a custom AI assistant to your website in minutes. Control its knowledge, customize its look, and manage everything from one dashboard.

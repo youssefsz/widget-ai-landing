@@ -20,7 +20,7 @@ interface Props {
 const {
   title = siteConfig.defaultTitle,
   description = siteConfig.defaultDescription,
-  image = siteConfig.ogImage,
+  image = siteConfig.ogImage.src,
   canonicalPath = Astro.url.pathname,
   keywords = siteConfig.defaultKeywords,
   noindex = false,
@@ -74,9 +74,9 @@ const schemas = (Array.isArray(structuredData) ? structuredData : [structuredDat
     <meta property="og:locale" content={siteConfig.locale} />
     <meta property="og:image" content={imageUrl} />
     <meta property="og:image:secure_url" content={imageUrl} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="2648" />
-    <meta property="og:image:height" content="1354" />
+    <meta property="og:image:type" content={`image/${siteConfig.ogImage.format}`} />
+    <meta property="og:image:width" content={siteConfig.ogImage.width.toString()} />
+    <meta property="og:image:height" content={siteConfig.ogImage.height.toString()} />
     <meta property="og:image:alt" content={siteConfig.ogImageAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />

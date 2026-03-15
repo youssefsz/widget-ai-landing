@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { siteConfig } from "@/lib/site"
+import logoImage from "@/assets/logo.png"
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -43,7 +44,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <a href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <img
-              src="/logo.png"
+              src={logoImage.src}
               alt="WidgetAI Logo"
               width={833}
               height={217}
