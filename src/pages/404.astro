@@ -1,0 +1,43 @@
+---
+import Layout from "@/layouts/main.astro"
+---
+
+<Layout
+  title="404 | Page not found"
+  description="The page you requested could not be found. Return to the WidgetAI homepage, open the dashboard, or contact support."
+  canonicalPath="/404"
+  noindex={true}
+>
+  <main
+    class="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-6"
+  >
+    <div
+      class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(154,255,88,0.14),transparent_30%),linear-gradient(180deg,rgba(19,23,34,0.98),rgba(19,23,34,1))]"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 flex items-center justify-center text-[10rem] leading-none font-black tracking-[-0.08em] text-primary/8 select-none sm:text-[14rem] md:text-[18rem] lg:text-[24rem]"
+    >
+      404
+    </div>
+
+    <div class="relative z-10 text-center">
+      
+      <h1
+        class="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl"
+      >
+        Page not found
+      </h1>
+      <p class="mt-4 text-base text-muted-foreground sm:text-lg">
+        Return to the homepage.
+      </p>
+      <a
+        href="/"
+        class="mt-8 inline-flex items-center justify-center rounded-full border border-primary/20 bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+      >
+        Go home
+      </a>
+    </div>
+  </main>
+</Layout>
