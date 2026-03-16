@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button-variants"
 import { Menu, X } from "lucide-react"
 import { siteConfig } from "@/lib/site"
 import logoImage from "@/assets/logo.png"
+import { cn } from "@/lib/utils"
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -28,21 +29,24 @@ export function Navbar() {
         setActiveSection("")
       }
     }
-    
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
     <>
-      <div 
-        className={`fixed top-4 inset-x-0 mx-auto flex items-center justify-between rounded-full border border-border/50 bg-background/60 px-6 py-3 backdrop-blur-md shadow-sm z-40 transition-all duration-300 w-[95%] max-w-7xl ${
+      <div
+        className={`fixed inset-x-0 top-4 z-40 mx-auto flex w-[95%] max-w-7xl items-center justify-between rounded-full border border-border/50 bg-background/60 px-6 py-3 shadow-sm backdrop-blur-md transition-all duration-300 ${
           scrolled ? "md:w-[85%] md:max-w-4xl" : ""
         }`}
       >
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <a href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+          <a
+            href="/"
+            className="flex items-center gap-2 transition-opacity hover:opacity-80"
+          >
             <img
               src={logoImage.src}
               alt="WidgetAI Logo"
@@ -54,28 +58,50 @@ export function Navbar() {
         </div>
 
         {/* Center Nav Links - Desktop */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-          <a href="#how-it-works" className={`transition-colors hover:text-foreground ${activeSection === 'how-it-works' ? 'text-foreground font-semibold' : ''}`}>How it Works</a>
-          <a href="#features" className={`transition-colors hover:text-foreground ${activeSection === 'features' ? 'text-foreground font-semibold' : ''}`}>Features</a>
-          <a href="#faq" className={`transition-colors hover:text-foreground ${activeSection === 'faq' ? 'text-foreground font-semibold' : ''}`}>FAQ</a>
+        <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
+          <a
+            href="#how-it-works"
+            className={`transition-colors hover:text-foreground ${activeSection === "how-it-works" ? "font-semibold text-foreground" : ""}`}
+          >
+            How it Works
+          </a>
+          <a
+            href="#features"
+            className={`transition-colors hover:text-foreground ${activeSection === "features" ? "font-semibold text-foreground" : ""}`}
+          >
+            Features
+          </a>
+          <a
+            href="#faq"
+            className={`transition-colors hover:text-foreground ${activeSection === "faq" ? "font-semibold text-foreground" : ""}`}
+          >
+            FAQ
+          </a>
         </nav>
 
         {/* CTA - Desktop */}
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-4">
-            <a href={siteConfig.dashboardUrl} className="text-sm font-medium hover:text-foreground text-muted-foreground mr-2">
+          <div className="hidden items-center gap-4 md:flex">
+            <a
+              href={siteConfig.dashboardUrl}
+              className="mr-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
               Log in
             </a>
-            <a href={siteConfig.dashboardUrl}>
-              <Button className="rounded-full shadow-md hover:shadow-lg transition-all" variant="default">
-                Get Started
-              </Button>
+            <a
+              href={siteConfig.dashboardUrl}
+              className={cn(
+                buttonVariants(),
+                "rounded-full shadow-md hover:shadow-lg"
+              )}
+            >
+              Get Started
             </a>
           </div>
-          
+
           {/* Mobile Menu Toggle Button */}
-          <button 
-            className="md:hidden flex items-center justify-center p-2 text-foreground hover:opacity-80 transition-opacity"
+          <button
+            className="flex cursor-pointer items-center justify-center p-2 text-foreground transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:opacity-80 active:scale-[0.94] md:hidden"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Open menu"
           >
@@ -86,42 +112,69 @@ export function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-background/40 backdrop-blur-sm z-50 md:hidden transition-opacity" 
+        <div
+          className="fixed inset-0 z-50 bg-background/40 backdrop-blur-sm transition-opacity md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile Menu Panel */}
-      <div 
-        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col border-l border-border/50 bg-background/95 backdrop-blur-xl p-8 shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${
+      <div
+        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col border-l border-border/50 bg-background/95 p-8 shadow-2xl backdrop-blur-xl transition-transform duration-300 ease-in-out md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex justify-end mb-12">
-          <button 
-            onClick={() => setIsMobileMenuOpen(false)} 
-            className="rounded-full bg-muted/50 p-2 text-foreground hover:bg-muted transition-colors"
+        <div className="mb-12 flex justify-end">
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="cursor-pointer rounded-full bg-muted/50 p-2 text-foreground transition-[background-color,transform] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-muted active:scale-[0.94]"
             aria-label="Close menu"
           >
             <X className="h-6 w-6" />
           </button>
         </div>
-        
-        <nav className="flex flex-col gap-6 text-2xl font-bold tracking-tight mt-4 w-full h-full">
-          <a href="#how-it-works" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors block pb-4 border-border/50 border-b ${activeSection === 'how-it-works' ? 'text-primary' : 'hover:text-primary'}`}>How it Works</a>
-          <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors block pb-4 border-border/50 border-b ${activeSection === 'features' ? 'text-primary' : 'hover:text-primary'}`}>Features</a>
-          <a href="#faq" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors block pb-4 border-border/50 border-b ${activeSection === 'faq' ? 'text-primary' : 'hover:text-primary'}`}>FAQ</a>
+
+        <nav className="mt-4 flex h-full w-full flex-col gap-6 text-2xl font-bold tracking-tight">
+          <a
+            href="#how-it-works"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`block border-b border-border/50 pb-4 transition-colors ${activeSection === "how-it-works" ? "text-primary" : "hover:text-primary"}`}
+          >
+            How it Works
+          </a>
+          <a
+            href="#features"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`block border-b border-border/50 pb-4 transition-colors ${activeSection === "features" ? "text-primary" : "hover:text-primary"}`}
+          >
+            Features
+          </a>
+          <a
+            href="#faq"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`block border-b border-border/50 pb-4 transition-colors ${activeSection === "faq" ? "text-primary" : "hover:text-primary"}`}
+          >
+            FAQ
+          </a>
         </nav>
-        
+
         <div className="mt-auto flex flex-col gap-4 pt-12 pb-6">
-          <a href={siteConfig.dashboardUrl} onClick={() => setIsMobileMenuOpen(false)} className="text-center font-medium hover:text-foreground text-muted-foreground text-lg mb-4">
+          <a
+            href={siteConfig.dashboardUrl}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="mb-4 text-center text-lg font-medium text-muted-foreground hover:text-foreground"
+          >
             Log in to dashboard
           </a>
-          <a href={siteConfig.dashboardUrl} className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-            <Button className="w-full rounded-full h-14 text-lg font-medium shadow-md" variant="default">
-              Get Started Now
-            </Button>
+          <a
+            href={siteConfig.dashboardUrl}
+            className={cn(
+              buttonVariants(),
+              "h-14 w-full rounded-full text-lg font-medium shadow-md"
+            )}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Get Started Now
           </a>
         </div>
       </div>

@@ -2,19 +2,16 @@
 import { Image } from "astro:assets"
 import Layout from "@/layouts/main.astro"
 import { Navbar } from "@/components/Navbar"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button-variants"
 import logoImage from "@/assets/logo.png"
 import previewImage from "@/assets/preview.png"
 import previewMobileImage from "@/assets/preview-mobile.png"
 import widgetPreviewImage from "@/assets/widget-preview.png"
-import {
-  faqItems,
-  getHomepageStructuredData,
-  siteConfig,
-} from "@/lib/site"
+import { cn } from "@/lib/utils"
+import { faqItems, getHomepageStructuredData, siteConfig } from "@/lib/site"
 
 const structuredData = getHomepageStructuredData(
-  Astro.site ?? new URL(siteConfig.siteUrl),
+  Astro.site ?? new URL(siteConfig.siteUrl)
 )
 ---
 
@@ -25,61 +22,99 @@ const structuredData = getHomepageStructuredData(
   structuredData={structuredData}
 >
   <Navbar client:load />
-  
+
   <main class="relative">
     {/* Tall Hero Section with Breathing Room */}
-    <section class="relative pt-36 md:pt-48 pb-24 z-10">
-      <div class="mx-auto flex flex-col items-center px-4 sm:px-6 lg:px-8 text-center max-w-7xl">
-        
+    <section class="relative z-10 pt-36 pb-24 md:pt-48">
+      <div
+        class="mx-auto flex max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8"
+      >
         {/* Eyebrow Label */}
-        <div class="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-8 transition-colors hover:bg-primary/20 opacity-0 fade-in-up" style="animation-delay: 0.1s;">
-          <span class="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+        <div
+          class="fade-in-up mb-8 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-medium text-primary opacity-0 transition-colors hover:bg-primary/20"
+          style="animation-delay: 0.1s;"
+        >
+          <span class="mr-2 flex h-2 w-2 animate-pulse rounded-full bg-primary"
+          ></span>
           Meet WidgetAI 1.0
         </div>
-        
+
         {/* Large Bold Headline */}
-        <h1 class="max-w-4xl text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl mb-6 text-foreground text-balance opacity-0 fade-in-up" style="animation-delay: 0.2s;">
+        <h1
+          class="fade-in-up mb-6 max-w-4xl text-5xl font-extrabold tracking-tight text-balance text-foreground opacity-0 sm:text-6xl lg:text-7xl"
+          style="animation-delay: 0.2s;"
+        >
           AI website widgets <br class="hidden sm:block" /> made simple.
         </h1>
-        
+
         {/* Short Supporting Paragraph */}
-        <p class="max-w-2xl text-lg sm:text-xl text-muted-foreground mb-10 text-balance leading-relaxed opacity-0 fade-in-up" style="animation-delay: 0.3s;">
-          Control what your assistant knows, how it looks, and where it lives. Install your custom AI with a single script tag and let it handle your customer interactions effortlessly.
+        <p
+          class="fade-in-up mb-10 max-w-2xl text-lg leading-relaxed text-balance text-muted-foreground opacity-0 sm:text-xl"
+          style="animation-delay: 0.3s;"
+        >
+          Control what your assistant knows, how it looks, and where it lives.
+          Install your custom AI with a single script tag and let it handle your
+          customer interactions effortlessly.
         </p>
-        
+
         {/* Two CTA Buttons */}
-        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-16 md:mb-24 opacity-0 fade-in-up" style="animation-delay: 0.4s;">
-          <a href={siteConfig.dashboardUrl} class="w-full sm:w-auto">
-            <Button client:load size="lg" className="rounded-full h-12 px-8 text-base shadow-lg hover:shadow-xl transition-shadow w-full">
-              Start Building Your Widget
-            </Button>
+        <div
+          class="fade-in-up mb-16 flex w-full flex-col gap-4 opacity-0 sm:w-auto sm:flex-row md:mb-24"
+          style="animation-delay: 0.4s;"
+        >
+          <a
+            href={siteConfig.dashboardUrl}
+            class={cn(
+              buttonVariants({ size: "lg" }),
+              "h-12 w-full rounded-full px-8 text-base shadow-md hover:shadow-lg sm:w-auto"
+            )}
+          >
+            Start Building Your Widget
           </a>
-          <a href="#how-it-works" class="w-full sm:w-auto">
-            <Button client:load size="lg" variant="outline" className="w-full rounded-full h-12 px-8 text-base border-border/50 bg-background hover:bg-muted/50 transition-colors">
-              How it works
-            </Button>
+          <a
+            href="#how-it-works"
+            class={cn(
+              buttonVariants({ size: "lg", variant: "outline" }),
+              "h-12 w-full rounded-full border-border/50 bg-background px-8 text-base hover:bg-muted/50 sm:w-auto"
+            )}
+          >
+            How it works
           </a>
         </div>
-        
+
         {/* Large Dashboard Preview Anchored at the Bottom */}
-        {/* Negative bottom margin forces it to slightly overlap the next section */}
-        <div class="relative w-full max-w-5xl mx-auto -mb-24 sm:-mb-48 lg:-mb-64 z-20 dashboard-preview-container" style="perspective: 1000px;">
-          <div id="dashboard-preview" class="relative w-full h-full transition-transform duration-75 ease-out" style="transform: rotateX(15deg) translateY(40px) scale(0.95); opacity: 0;">
+        {
+          /* Negative bottom margin forces it to slightly overlap the next section */
+        }
+        <div
+          class="dashboard-preview-container relative z-20 mx-auto -mb-24 w-full max-w-6xl sm:-mb-48 lg:-mb-64 xl:max-w-[74rem]"
+          style="perspective: 1000px;"
+        >
+          <div
+            id="dashboard-preview"
+            class="relative h-full w-full transition-transform duration-75 ease-out"
+            style="transform: rotateX(15deg) translateY(40px) scale(0.95); opacity: 0;"
+          >
             {/* Subtle glow effect behind the dashboard */}
-            <div class="absolute -inset-1 sm:-inset-4 bg-primary/30 rounded-2xl sm:rounded-[2.5rem] blur-xl sm:blur-2xl opacity-40 -z-10"></div>
-            
-            <div class="rounded-xl sm:rounded-2xl border border-primary/40 bg-background/50 p-1 sm:p-2 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+            <div
+              class="absolute inset-0 -z-10 rounded-xl bg-primary/18 opacity-30 blur-lg sm:-inset-2 sm:rounded-2xl sm:blur-xl"
+            >
+            </div>
+
+            <div
+              class="rounded-lg border border-primary/30 bg-background/60 p-1 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.28)] backdrop-blur-sm sm:rounded-xl sm:p-1.5"
+            >
               {/* Desktop Preview */}
               <Image
                 src={previewImage}
                 alt="WidgetAI Dashboard Preview"
-                class="hidden sm:block w-full h-auto rounded-lg sm:rounded-xl border border-primary/20 shadow-inner object-cover"
+                class="hidden h-auto w-full rounded-md border border-primary/15 object-cover shadow-sm sm:block sm:rounded-lg"
               />
               {/* Mobile Preview */}
               <Image
                 src={previewMobileImage}
                 alt="WidgetAI Mobile Dashboard Preview"
-                class="block sm:hidden w-full h-auto rounded-xl border border-primary/20 shadow-inner object-cover"
+                class="block h-auto w-full rounded-lg border border-primary/15 object-cover shadow-sm sm:hidden"
               />
             </div>
           </div>
@@ -88,48 +123,77 @@ const structuredData = getHomepageStructuredData(
     </section>
 
     {/* How It Works Section */}
-    <section id="how-it-works" class="relative pt-36 pb-24 sm:pt-64 sm:pb-32 bg-secondary/5 z-0">
-      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
-          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-foreground">
+    <section
+      id="how-it-works"
+      class="relative z-0 bg-secondary/5 pt-36 pb-24 sm:pt-64 sm:pb-32"
+    >
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto mb-16 max-w-3xl text-center sm:mb-24">
+          <h2
+            class="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+          >
             How it works
           </h2>
           <p class="text-lg text-muted-foreground">
-            Get your AI assistant up and running in minutes. No coding required, just answer a few questions and paste a script.
+            Get your AI assistant up and running in minutes. No coding required,
+            just answer a few questions and paste a script.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 w-full max-w-5xl mx-auto">
+        <div
+          class="mx-auto grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12"
+        >
           {/* Step 1 */}
-          <div class="flex flex-col items-center sm:items-start text-center sm:text-left relative group">
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xl mb-6 shadow-sm">
+          <div
+            class="group relative flex flex-col items-center text-center sm:items-start sm:text-left"
+          >
+            <div
+              class="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl font-bold text-primary shadow-sm"
+            >
               1
             </div>
-            <h3 class="text-xl font-semibold mb-3 text-foreground">Create a widget</h3>
-            <p class="text-muted-foreground leading-relaxed">
-              Sign up and create your first AI widget. Give it a name and customize its appearance to match your brand's colors and style.
+            <h3 class="mb-3 text-xl font-semibold text-foreground">
+              Create a widget
+            </h3>
+            <p class="leading-relaxed text-muted-foreground">
+              Sign up and create your first AI widget. Give it a name and
+              customize its appearance to match your brand's colors and style.
             </p>
           </div>
 
           {/* Step 2 */}
-          <div class="flex flex-col items-center sm:items-start text-center sm:text-left relative group">
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xl mb-6 shadow-sm">
+          <div
+            class="group relative flex flex-col items-center text-center sm:items-start sm:text-left"
+          >
+            <div
+              class="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl font-bold text-primary shadow-sm"
+            >
               2
             </div>
-            <h3 class="text-xl font-semibold mb-3 text-foreground">Add context</h3>
-            <p class="text-muted-foreground leading-relaxed">
-              Provide your business context and custom instructions. Tell the AI what to answer, how to behave, and what features to highlight.
+            <h3 class="mb-3 text-xl font-semibold text-foreground">
+              Add context
+            </h3>
+            <p class="leading-relaxed text-muted-foreground">
+              Provide your business context and custom instructions. Tell the AI
+              what to answer, how to behave, and what features to highlight.
             </p>
           </div>
 
           {/* Step 3 */}
-          <div class="flex flex-col items-center sm:items-start text-center sm:text-left relative group">
-            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xl mb-6 shadow-sm">
+          <div
+            class="group relative flex flex-col items-center text-center sm:items-start sm:text-left"
+          >
+            <div
+              class="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl font-bold text-primary shadow-sm"
+            >
               3
             </div>
-            <h3 class="text-xl font-semibold mb-3 text-foreground">Embed easily</h3>
-            <p class="text-muted-foreground leading-relaxed">
-              Copy the generated code snippet and add it to your website. The widget immediately appears and starts working for your visitors.
+            <h3 class="mb-3 text-xl font-semibold text-foreground">
+              Embed easily
+            </h3>
+            <p class="leading-relaxed text-muted-foreground">
+              Copy the generated code snippet and add it to your website. The
+              widget immediately appears and starts working for your visitors.
             </p>
           </div>
         </div>
@@ -137,128 +201,275 @@ const structuredData = getHomepageStructuredData(
     </section>
 
     {/* Features Grid Section */}
-    <section id="features" class="relative py-24 sm:py-32 bg-background z-10">
-      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-foreground">
+    <section id="features" class="relative z-10 bg-background py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto mb-16 max-w-3xl text-center sm:mb-20">
+          <h2
+            class="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+          >
             Everything you need
           </h2>
           <p class="text-lg text-muted-foreground">
-            Powerful capabilities wrapped in an elegant, minimal interface. Built to give you full control over your AI assistant.
+            Powerful capabilities wrapped in an elegant, minimal interface.
+            Built to give you full control over your AI assistant.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 auto-rows-[minmax(180px,auto)]">
+        <div
+          class="grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8"
+        >
           {/* Card 1: Embeddable chat widget (Large square, spans 2x2) */}
-          <div class="group relative rounded-3xl border border-border/50 bg-background lg:bg-gradient-to-br from-background to-secondary/5 p-8 sm:p-10 shadow-sm transition-all hover:shadow-md hover:border-primary/20 md:col-span-2 lg:col-span-2 lg:row-span-2 flex flex-col md:flex-row items-center gap-8 overflow-hidden">
-            
+          <div
+            class="group relative flex flex-col items-center gap-8 overflow-hidden rounded-3xl border border-border/50 bg-background from-background to-secondary/5 p-8 shadow-sm transition-all hover:border-primary/20 hover:shadow-md sm:p-10 md:col-span-2 md:flex-row lg:col-span-2 lg:row-span-2 lg:bg-gradient-to-br"
+          >
             {/* Text Content Left */}
-            <div class="z-10 md:w-1/2 flex flex-col justify-center">
-              <div class="mb-5 inline-flex shrink-0 items-center justify-center text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+            <div class="z-10 flex flex-col justify-center md:w-1/2">
+              <div
+                class="mb-5 inline-flex shrink-0 items-center justify-center text-primary"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-10 w-10"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
+                  ></path>
                 </svg>
               </div>
-              <h3 class="mb-3 text-2xl font-bold text-foreground tracking-tight">Embeddable Widget</h3>
-              <p class="text-sm text-muted-foreground leading-relaxed">
-                A beautifully designed chat interface that lives natively in the bottom corner of your website, perfectly adapting to your visitors.
+              <h3
+                class="mb-3 text-2xl font-bold tracking-tight text-foreground"
+              >
+                Embeddable Widget
+              </h3>
+              <p class="text-sm leading-relaxed text-muted-foreground">
+                A beautifully designed chat interface that lives natively in the
+                bottom corner of your website, perfectly adapting to your
+                visitors.
               </p>
             </div>
 
             {/* Widget Preview Image Right */}
-            <div class="md:w-1/2 w-full flex justify-center items-center group-hover:scale-[1.03] transition-transform duration-500 ease-out">
+            <div
+              class="flex w-full items-center justify-center transition-transform duration-500 ease-out group-hover:scale-[1.03] md:w-1/2"
+            >
               <Image
                 src={widgetPreviewImage}
                 alt="Widget Preview"
                 loading="lazy"
-                class="w-full max-w-[320px] h-auto object-contain drop-shadow-2xl rounded-2xl"
+                class="h-auto w-full max-w-[320px] rounded-2xl object-contain drop-shadow-2xl"
               />
             </div>
           </div>
 
           {/* Card 2: Simple installation (Wide rectangle, spans 2 cols) */}
-          <div class="group relative rounded-3xl border border-border/50 bg-background py-6 px-4 lg:py-8 lg:px-5 shadow-sm transition-all hover:shadow-md hover:border-primary/20 md:col-span-1 lg:col-span-2 flex flex-col justify-center">
-            <div class="mb-4 inline-flex items-center justify-center text-primary mx-2 lg:mx-3">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+          <div
+            class="group relative flex flex-col justify-center rounded-3xl border border-border/50 bg-background px-4 py-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-md md:col-span-1 lg:col-span-2 lg:px-5 lg:py-8"
+          >
+            <div
+              class="mx-2 mb-4 inline-flex items-center justify-center text-primary lg:mx-3"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-10 w-10"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+                ></path>
               </svg>
             </div>
-            <h3 class="mb-2 text-xl font-semibold text-foreground tracking-tight mx-2 lg:mx-3">1-Minute Install</h3>
-            <p class="text-sm text-muted-foreground leading-relaxed max-w-md mb-6 mx-2 lg:mx-3">
-              Just copy a single lightweight script tag into your website. Works independent of your tech stack.
+            <h3
+              class="mx-2 mb-2 text-xl font-semibold tracking-tight text-foreground lg:mx-3"
+            >
+              1-Minute Install
+            </h3>
+            <p
+              class="mx-2 mb-6 max-w-md text-sm leading-relaxed text-muted-foreground lg:mx-3"
+            >
+              Just copy a single lightweight script tag into your website. Works
+              independent of your tech stack.
             </p>
             {/* The Script Wrapper */}
-            <div class="w-full mt-auto overflow-hidden">
-              <div class="font-mono text-xs sm:text-sm md:text-base leading-relaxed bg-[#1e1e1e] py-3 px-2 sm:px-3 rounded-xl border border-border/50 shadow-inner w-full whitespace-pre-wrap break-all flex flex-col">
+            <div class="mt-auto w-full overflow-hidden">
+              <div
+                class="flex w-full flex-col rounded-xl border border-border/50 bg-[#1e1e1e] px-2 py-3 font-mono text-xs leading-relaxed break-all whitespace-pre-wrap shadow-inner sm:px-3 sm:text-sm md:text-base"
+              >
                 <div>
-                  <span class="text-gray-400">&lt;</span><span class="text-[#569cd6]">script</span>
+                  <span class="text-gray-400">&lt;</span><span
+                    class="text-[#569cd6]">script</span
+                  >
                 </div>
                 <div class="pl-2">
-                  <span class="text-[#9cdcfe]">src</span><span class="text-gray-400">=</span><span class="text-[#ce9178]">{`"${siteConfig.embedScriptUrl}"`}</span>
+                  <span class="text-[#9cdcfe]">src</span><span
+                    class="text-gray-400">=</span
+                  ><span class="text-[#ce9178]"
+                    >{`"${siteConfig.embedScriptUrl}"`}</span
+                  >
                 </div>
                 <div class="pl-2">
-                  <span class="text-[#9cdcfe]">data-widget-id</span><span class="text-gray-400">=</span><span class="text-[#ce9178]">"..."</span><span class="text-gray-400">&gt;</span>
+                  <span class="text-[#9cdcfe]">data-widget-id</span><span
+                    class="text-gray-400">=</span
+                  ><span class="text-[#ce9178]">"..."</span><span
+                    class="text-gray-400">&gt;</span
+                  >
                 </div>
                 <div>
-                  <span class="text-gray-400">&lt;/</span><span class="text-[#569cd6]">script</span><span class="text-gray-400">&gt;</span>
+                  <span class="text-gray-400">&lt;/</span><span
+                    class="text-[#569cd6]">script</span
+                  ><span class="text-gray-400">&gt;</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Card 3: Widget customization (Small square, 11) */}
-          <div class="group relative rounded-3xl border border-border/50 bg-background p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/20 md:col-span-1 lg:col-span-1 flex flex-col justify-end">
-            <div class="mb-auto inline-flex h-12 w-12 items-center text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.55l3.834-3.834a3 3 0 00-4.242-4.242L8.528 10.33A16.002 16.002 0 009.53 16.12zm5.72-9.76L16.24 5.37c.395-.395 1.032-.395 1.43 0l1.414 1.414c.395.395.395 1.032 0 1.43l-1.01 1.01" />
+          <div
+            class="group relative flex flex-col justify-end rounded-3xl border border-border/50 bg-background p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-md md:col-span-1 lg:col-span-1"
+          >
+            <div
+              class="mb-auto inline-flex h-12 w-12 items-center text-primary"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-9 w-9"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.55l3.834-3.834a3 3 0 00-4.242-4.242L8.528 10.33A16.002 16.002 0 009.53 16.12zm5.72-9.76L16.24 5.37c.395-.395 1.032-.395 1.43 0l1.414 1.414c.395.395.395 1.032 0 1.43l-1.01 1.01"
+                ></path>
               </svg>
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-foreground tracking-tight">Custom Style</h3>
-            <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+            <h3
+              class="mb-2 text-lg font-semibold tracking-tight text-foreground"
+            >
+              Custom Style
+            </h3>
+            <p
+              class="line-clamp-2 text-sm leading-relaxed text-muted-foreground"
+            >
               Tweak colors and panel themes to match your brand completely.
             </p>
           </div>
 
           {/* Card 4: Domain restrictions (Small square, 11) */}
-          <div class="group relative rounded-3xl border border-border/50 bg-background p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/20 md:col-span-1 lg:col-span-1 flex flex-col justify-end">
-            <div class="mb-auto inline-flex h-12 w-12 items-center text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+          <div
+            class="group relative flex flex-col justify-end rounded-3xl border border-border/50 bg-background p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-md md:col-span-1 lg:col-span-1"
+          >
+            <div
+              class="mb-auto inline-flex h-12 w-12 items-center text-primary"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-9 w-9"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+                ></path>
               </svg>
             </div>
-            <h3 class="mb-2 text-lg font-semibold text-foreground tracking-tight">Domain Auth</h3>
-            <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+            <h3
+              class="mb-2 text-lg font-semibold tracking-tight text-foreground"
+            >
+              Domain Auth
+            </h3>
+            <p
+              class="line-clamp-2 text-sm leading-relaxed text-muted-foreground"
+            >
               Secure your widget by allowing it to load only on approved sites.
             </p>
           </div>
 
           {/* Card 5: AI configuration (Wide rectangle, spans 2 cols) */}
-          <div class="group relative rounded-3xl border border-border/50 bg-background p-6 lg:p-8 shadow-sm transition-all hover:shadow-md hover:border-primary/20 md:col-span-2 lg:col-span-2 flex flex-col sm:flex-row sm:items-center gap-6">
-            <div class="inline-flex shrink-0 h-12 w-12 items-center text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-16.5v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" />
+          <div
+            class="group relative flex flex-col gap-6 rounded-3xl border border-border/50 bg-background p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-md sm:flex-row sm:items-center md:col-span-2 lg:col-span-2 lg:p-8"
+          >
+            <div
+              class="inline-flex h-12 w-12 shrink-0 items-center text-primary"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-9 w-9"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-16.5v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"
+                ></path>
               </svg>
             </div>
             <div>
-              <h3 class="mb-2 text-xl font-semibold text-foreground tracking-tight">AI Configuration</h3>
-              <p class="text-sm text-muted-foreground leading-relaxed">
-                Use our built-in models out of the box, or securely plug in your own API credentials to run specific customized models.
+              <h3
+                class="mb-2 text-xl font-semibold tracking-tight text-foreground"
+              >
+                AI Configuration
+              </h3>
+              <p class="text-sm leading-relaxed text-muted-foreground">
+                Use our built-in models out of the box, or securely plug in your
+                own API credentials to run specific customized models.
               </p>
             </div>
           </div>
 
-          {/* Card 6: Context-based answers (Wide rectangle, spans 2 cols on lg) */}
-          <div class="group relative rounded-3xl border border-border/50 bg-background p-6 lg:p-8 shadow-sm transition-all hover:shadow-md hover:border-primary/20 md:col-span-2 lg:col-span-2 flex flex-col justify-center">
-            <div class="flex items-center gap-6 mb-5">
-              <div class="inline-flex shrink-0 h-10 w-10 items-center justify-center text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+          {
+            /* Card 6: Context-based answers (Wide rectangle, spans 2 cols on lg) */
+          }
+          <div
+            class="group relative flex flex-col justify-center rounded-3xl border border-border/50 bg-background p-6 shadow-sm transition-all hover:border-primary/20 hover:shadow-md md:col-span-2 lg:col-span-2 lg:p-8"
+          >
+            <div class="mb-5 flex items-center gap-6">
+              <div
+                class="inline-flex h-10 w-10 shrink-0 items-center justify-center text-primary"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-9 w-9"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                  ></path>
                 </svg>
               </div>
               <div>
-                <h3 class="mb-2 text-xl font-semibold text-foreground tracking-tight">Context & Instructions</h3>
-                <p class="text-sm text-muted-foreground leading-relaxed">
-                  Train your assistant on your exact business knowledge, specific FAQs, and behavioral rules.
+                <h3
+                  class="mb-2 text-xl font-semibold tracking-tight text-foreground"
+                >
+                  Context & Instructions
+                </h3>
+                <p class="text-sm leading-relaxed text-muted-foreground">
+                  Train your assistant on your exact business knowledge,
+                  specific FAQs, and behavioral rules.
                 </p>
               </div>
             </div>
@@ -268,60 +479,100 @@ const structuredData = getHomepageStructuredData(
     </section>
 
     {/* FAQ Section */}
-    <section id="faq" class="relative py-24 sm:py-32 bg-secondary/5 z-0">
+    <section id="faq" class="relative z-0 bg-secondary/5 py-24 sm:py-32">
       <div class="mx-auto max-w-3xl px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
+        <div class="mb-16 text-center">
+          <h2
+            class="text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl"
+          >
             Frequently Asked Questions
           </h2>
           <p class="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Everything you need to know about setting up and using the AI widget platform.
+            Everything you need to know about setting up and using the AI widget
+            platform.
           </p>
         </div>
 
         <div class="faq-accordion space-y-2">
-          {faqItems.map((item, index) => {
-            const answerId = `faq-answer-${index + 1}`
+          {
+            faqItems.map((item, index) => {
+              const answerId = `faq-answer-${index + 1}`
 
-            return (
-              <div class="faq-item border-b border-border/20 overflow-hidden">
-                <button
-                  type="button"
-                  class="faq-button flex w-full items-center justify-between py-5 text-left font-semibold text-foreground text-lg outline-none transition-colors hover:text-primary"
-                  aria-expanded="false"
-                  aria-controls={answerId}
-                >
-                  <span>{item.question}</span>
-                  <span class="faq-icon relative flex h-6 w-6 shrink-0 items-center justify-center transition-transform duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="absolute transition-transform duration-300"><path d="M5 12h14"></path><path d="M12 5v14" class="vertical-line transition-transform duration-300"></path></svg>
-                  </span>
-                </button>
-                <div id={answerId} class="faq-content grid transition-all duration-300 grid-rows-[0fr] opacity-0">
-                  <div class="overflow-hidden">
-                    <p class="pb-6 leading-relaxed text-muted-foreground">
-                      {item.answer}
-                    </p>
+              return (
+                <div class="faq-item overflow-hidden border-b border-border/20">
+                  <button
+                    type="button"
+                    class="faq-button flex w-full cursor-pointer items-center justify-between py-5 text-left text-lg font-semibold text-foreground transition-[color,transform] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] outline-none hover:text-primary active:scale-[0.992]"
+                    aria-expanded="false"
+                    aria-controls={answerId}
+                  >
+                    <span>{item.question}</span>
+                    <span class="faq-icon relative flex h-6 w-6 shrink-0 items-center justify-center transition-transform duration-300">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="absolute transition-transform duration-300"
+                      >
+                        <>
+                          <path d="M5 12h14" />
+                          <path
+                            d="M12 5v14"
+                            class="vertical-line transition-transform duration-300"
+                          />
+                        </>
+                      </svg>
+                    </span>
+                  </button>
+                  <div
+                    id={answerId}
+                    class="faq-content grid grid-rows-[0fr] opacity-0 transition-all duration-300"
+                  >
+                    <div class="overflow-hidden">
+                      <p class="pb-6 leading-relaxed text-muted-foreground">
+                        {item.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })
+          }
         </div>
       </div>
     </section>
 
     {/* Final CTA Section */}
-    <section class="relative py-24 sm:py-32 bg-primary overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary/80 z-0"></div>
-      <div class="relative z-10 mx-auto max-w-4xl px-6 lg:px-8 text-center text-primary-foreground">
-        <h2 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-6 text-balance">
+    <section class="relative overflow-hidden bg-primary py-24 sm:py-32">
+      <div
+        class="absolute inset-0 z-0 bg-gradient-to-br from-primary via-primary to-primary/80"
+      >
+      </div>
+      <div
+        class="relative z-10 mx-auto max-w-4xl px-6 text-center text-primary-foreground lg:px-8"
+      >
+        <h2
+          class="mb-6 text-4xl font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+        >
           Ready to supercharge your website?
         </h2>
-        <p class="mx-auto max-w-2xl text-lg sm:text-xl font-medium text-primary-foreground/90 mb-10 leading-relaxed text-balance">
-          Launch a custom AI assistant in minutes, control its knowledge, and manage everything from one intuitive dashboard.
+        <p
+          class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed font-medium text-balance text-primary-foreground/90 sm:text-xl"
+        >
+          Launch a custom AI assistant in minutes, control its knowledge, and
+          manage everything from one intuitive dashboard.
         </p>
         <div class="flex justify-center">
-          <a href={siteConfig.dashboardUrl} class="inline-flex h-12 md:h-14 items-center justify-center rounded-full bg-background text-foreground px-8 md:px-10 text-base md:text-lg font-semibold shadow-md hover:scale-105 transition-transform duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background">
+          <a
+            href={siteConfig.dashboardUrl}
+            class="inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-background px-8 text-base font-semibold text-foreground shadow-md transition-[background-color,box-shadow,transform] duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-background/95 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background active:translate-y-[1px] active:scale-[0.986] active:shadow-sm md:h-14 md:px-10 md:text-lg"
+          >
             Get started for free
           </a>
         </div>
@@ -330,161 +581,232 @@ const structuredData = getHomepageStructuredData(
 
     <script>
       // Smooth collapse/expand via CSS Grid transition
-      const buttons = document.querySelectorAll('.faq-button');
-      
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          const item = button.closest('.faq-item');
-          if (!item) return;
+      const buttons = document.querySelectorAll(".faq-button")
 
-          const content = item.querySelector('.faq-content');
-          const verticalLine = item.querySelector('.vertical-line');
-          if (!content || !verticalLine) return;
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const item = button.closest(".faq-item")
+          if (!item) return
 
-          const isOpen = item.classList.contains('is-open');
-          button.setAttribute('aria-expanded', String(!isOpen));
+          const content = item.querySelector(".faq-content")
+          const verticalLine = item.querySelector(".vertical-line")
+          if (!content || !verticalLine) return
+
+          const isOpen = item.classList.contains("is-open")
+          button.setAttribute("aria-expanded", String(!isOpen))
 
           // Close all logic (Optional, but keeps the layout clean)
-          document.querySelectorAll('.faq-item').forEach(otherItem => {
+          document.querySelectorAll(".faq-item").forEach((otherItem) => {
             if (otherItem !== item) {
-              otherItem.classList.remove('is-open');
-              const otherButton = otherItem.querySelector('.faq-button');
-              const otherContent = otherItem.querySelector('.faq-content');
-              const otherVerticalLine = otherItem.querySelector('.vertical-line');
-              
+              otherItem.classList.remove("is-open")
+              const otherButton = otherItem.querySelector(".faq-button")
+              const otherContent = otherItem.querySelector(".faq-content")
+              const otherVerticalLine =
+                otherItem.querySelector(".vertical-line")
+
               if (otherButton) {
-                otherButton.setAttribute('aria-expanded', 'false');
+                otherButton.setAttribute("aria-expanded", "false")
               }
               if (otherContent) {
-                otherContent.classList.remove('grid-rows-[1fr]', 'opacity-100');
-                otherContent.classList.add('grid-rows-[0fr]', 'opacity-0');
+                otherContent.classList.remove("grid-rows-[1fr]", "opacity-100")
+                otherContent.classList.add("grid-rows-[0fr]", "opacity-0")
               }
               if (otherVerticalLine) {
-                otherVerticalLine.classList.remove('rotate-90', 'opacity-0');
+                otherVerticalLine.classList.remove("rotate-90", "opacity-0")
               }
             }
-          });
+          })
 
           // Toggle current
           if (isOpen) {
-            item.classList.remove('is-open');
-            content.classList.remove('grid-rows-[1fr]', 'opacity-100');
-            content.classList.add('grid-rows-[0fr]', 'opacity-0');
-            verticalLine.classList.remove('rotate-90', 'opacity-0');
+            item.classList.remove("is-open")
+            content.classList.remove("grid-rows-[1fr]", "opacity-100")
+            content.classList.add("grid-rows-[0fr]", "opacity-0")
+            verticalLine.classList.remove("rotate-90", "opacity-0")
           } else {
-            item.classList.add('is-open');
-            content.classList.remove('grid-rows-[0fr]', 'opacity-0');
-            content.classList.add('grid-rows-[1fr]', 'opacity-100');
-            verticalLine.classList.add('rotate-90', 'opacity-0');
+            item.classList.add("is-open")
+            content.classList.remove("grid-rows-[0fr]", "opacity-0")
+            content.classList.add("grid-rows-[1fr]", "opacity-100")
+            verticalLine.classList.add("rotate-90", "opacity-0")
           }
-        });
-      });
+        })
+      })
 
       // Dashboard Preview Parallax Animation
-      const preview = document.getElementById('dashboard-preview');
+      const preview = document.getElementById("dashboard-preview")
       if (preview) {
         const handleScroll = () => {
-          const scrollY = window.scrollY;
+          const scrollY = window.scrollY
           // Calculate progress based on scroll position (0 to 1 over 500px)
-          const progress = Math.min(scrollY / 500, 1);
-          
-          // Animate rotation, translation, scale, and opacity
-          const rotateX = 15 - (progress * 15); // from 15deg to 0deg
-          const translateY = 40 - (progress * 40); // from 40px to 0px
-          const scale = 0.95 + (progress * 0.05); // from 0.95 to 1
-          const opacity = 0.5 + (progress * 0.5); // from 0.5 to 1
-          
-          preview.style.transform = `rotateX(${rotateX}deg) translateY(${translateY}px) scale(${scale})`;
-          preview.style.opacity = progress > 0 ? opacity.toString() : '0.5';
-        };
+          const progress = Math.min(scrollY / 500, 1)
 
-        window.addEventListener('scroll', () => {
-          requestAnimationFrame(handleScroll);
-        }, { passive: true });
-        
+          // Animate rotation, translation, scale, and opacity
+          const rotateX = 15 - progress * 15 // from 15deg to 0deg
+          const translateY = 40 - progress * 40 // from 40px to 0px
+          const scale = 0.95 + progress * 0.05 // from 0.95 to 1
+          const opacity = 0.5 + progress * 0.5 // from 0.5 to 1
+
+          preview.style.transform = `rotateX(${rotateX}deg) translateY(${translateY}px) scale(${scale})`
+          preview.style.opacity = progress > 0 ? opacity.toString() : "0.5"
+        }
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            requestAnimationFrame(handleScroll)
+          },
+          { passive: true }
+        )
+
         // Initial setup on load
-        handleScroll();
+        handleScroll()
       }
 
       // Intersection Observer for Smooth Scroll Animations
       const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-      };
+        rootMargin: "0px",
+        threshold: 0.1,
+      }
 
       const scrollObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target); // Optional: stop observing once animated
+            entry.target.classList.add("is-visible")
+            observer.unobserve(entry.target) // Optional: stop observing once animated
           }
-        });
-      }, observerOptions);
+        })
+      }, observerOptions)
 
       // Select sections to animate
       const animateSelectors = [
-        '#how-it-works .text-center',
-        '#how-it-works .group',
-        '#features .text-center',
-        '#features .group',
-        '#faq .text-center',
-        '#faq .faq-item',
-        'footer'
-      ];
+        "#how-it-works .text-center",
+        "#how-it-works .group",
+        "#features .text-center",
+        "#features .group",
+        "#faq .text-center",
+        "#faq .faq-item",
+        "footer",
+      ]
 
-      document.querySelectorAll(animateSelectors.join(', ')).forEach((el, index) => {
-        el.classList.add('scroll-animate');
-        // Add staggered delay to group elements (like cards in a grid)
-        if (el instanceof HTMLElement && (el.classList.contains('group') || el.classList.contains('faq-item'))) {
-          const delay = (index % 3) * 0.1;
-          el.style.transitionDelay = `${delay}s`;
-        }
-        scrollObserver.observe(el);
-      });
+      document
+        .querySelectorAll(animateSelectors.join(", "))
+        .forEach((el, index) => {
+          el.classList.add("scroll-animate")
+          // Add staggered delay to group elements (like cards in a grid)
+          if (
+            el instanceof HTMLElement &&
+            (el.classList.contains("group") ||
+              el.classList.contains("faq-item"))
+          ) {
+            const delay = (index % 3) * 0.1
+            el.style.transitionDelay = `${delay}s`
+          }
+          scrollObserver.observe(el)
+        })
     </script>
   </main>
 
   {/* Footer Section */}
-  <footer class="relative bg-background pt-20 pb-10 border-t border-border/40">
+  <footer class="relative border-t border-border/40 bg-background pt-20 pb-10">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="flex flex-col lg:flex-row justify-between gap-12 lg:gap-8">
-        
+      <div class="flex flex-col justify-between gap-12 lg:flex-row lg:gap-8">
         {/* Brand & Description */}
         <div class="max-w-sm">
-          <a href="/" class="flex items-center gap-2 mb-5 outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm w-fit">
-            <Image src={logoImage} alt="WidgetAI Logo" class="h-8 w-auto object-contain" />
+          <a
+            href="/"
+            class="mb-5 flex w-fit items-center gap-2 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            <Image
+              src={logoImage}
+              alt="WidgetAI Logo"
+              class="h-8 w-auto object-contain"
+            />
           </a>
-          <p class="text-sm text-muted-foreground leading-relaxed">
-            Add a custom AI assistant to your website in minutes. Control its knowledge, customize its look, and manage everything from one dashboard.
+          <p class="text-sm leading-relaxed text-muted-foreground">
+            Add a custom AI assistant to your website in minutes. Control its
+            knowledge, customize its look, and manage everything from one
+            dashboard.
           </p>
         </div>
-        
+
         {/* Link Groups */}
         <div class="flex flex-wrap gap-12 sm:gap-16 md:gap-24">
           <div>
-            <h3 class="font-semibold text-foreground text-sm tracking-wide mb-4">Product</h3>
+            <h3
+              class="mb-4 text-sm font-semibold tracking-wide text-foreground"
+            >
+              Product
+            </h3>
             <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
-              <li><a href="#features" class="hover:text-primary hover:underline underline-offset-4 transition-all outline-none focus-visible:text-primary">Features</a></li>
-              <li><a href="#how-it-works" class="hover:text-primary hover:underline underline-offset-4 transition-all outline-none focus-visible:text-primary">How it works</a></li>
-              <li><a href="#faq" class="hover:text-primary hover:underline underline-offset-4 transition-all outline-none focus-visible:text-primary">FAQ</a></li>
-              <li><a href={siteConfig.dashboardUrl} class="hover:text-primary hover:underline underline-offset-4 transition-all outline-none focus-visible:text-primary">Sign in</a></li>
-              <li><a href={siteConfig.supportEmailHref} class="hover:text-primary hover:underline underline-offset-4 transition-all outline-none focus-visible:text-primary">Support</a></li>
+              <li>
+                <a
+                  href="#features"
+                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
+                  >Features</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#how-it-works"
+                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
+                  >How it works</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#faq"
+                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
+                  >FAQ</a
+                >
+              </li>
+              <li>
+                <a
+                  href={siteConfig.dashboardUrl}
+                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
+                  >Sign in</a
+                >
+              </li>
+              <li>
+                <a
+                  href={siteConfig.supportEmailHref}
+                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
+                  >Support</a
+                >
+              </li>
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-foreground text-sm tracking-wide mb-4">Legal</h3>
+            <h3
+              class="mb-4 text-sm font-semibold tracking-wide text-foreground"
+            >
+              Legal
+            </h3>
             <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
-              <li><a href={siteConfig.privacyUrl} class="hover:text-primary hover:underline underline-offset-4 transition-all outline-none focus-visible:text-primary">Privacy Policy</a></li>
-              <li><a href={siteConfig.termsUrl} class="hover:text-primary hover:underline underline-offset-4 transition-all outline-none focus-visible:text-primary">Terms of Service</a></li>
+              <li>
+                <a
+                  href={siteConfig.privacyUrl}
+                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a
+                  href={siteConfig.termsUrl}
+                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
+                  >Terms of Service</a
+                >
+              </li>
             </ul>
           </div>
         </div>
       </div>
-      
+
       {/* Copyright Bottom Bar */}
-      <div class="mt-16 pt-8 border-t border-border/40 flex items-center justify-center">
-        <p class="text-sm text-muted-foreground text-center">
+      <div
+        class="mt-16 flex items-center justify-center border-t border-border/40 pt-8"
+      >
+        <p class="text-center text-sm text-muted-foreground">
           &copy; {new Date().getFullYear()} WidgetAI. All rights reserved.
         </p>
       </div>
@@ -502,7 +824,7 @@ const structuredData = getHomepageStructuredData(
         transform: translateY(0);
       }
     }
-    
+
     .fade-in-up {
       animation: fadeInUp 0.8s ease-out forwards;
     }
@@ -511,9 +833,11 @@ const structuredData = getHomepageStructuredData(
     .scroll-animate {
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      transition:
+        opacity 0.8s ease-out,
+        transform 0.8s ease-out;
     }
-    
+
     .scroll-animate.is-visible {
       opacity: 1;
       transform: translateY(0);
