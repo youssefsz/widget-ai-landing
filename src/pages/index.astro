@@ -1,18 +1,67 @@
 ---
 import { Image } from "astro:assets"
 import Layout from "@/layouts/main.astro"
-import { Navbar } from "@/components/Navbar"
-import { buttonVariants } from "@/components/ui/button-variants"
+import Navbar from "@/components/Navbar.astro"
+import FaqAccordion from "@/components/FaqAccordion.astro"
+import LinkButton from "@/components/ui/LinkButton.astro"
 import logoImage from "@/assets/logo.png"
 import previewImage from "@/assets/preview.png"
 import previewMobileImage from "@/assets/preview-mobile.png"
 import widgetPreviewImage from "@/assets/widget-preview.png"
-import { cn } from "@/lib/utils"
 import { faqItems, getHomepageStructuredData, siteConfig } from "@/lib/site"
+import "@/styles/pages/home.css"
 
 const structuredData = getHomepageStructuredData(
   Astro.site ?? new URL(siteConfig.siteUrl)
 )
+
+const useCases = [
+  {
+    number: "01",
+    title: "Customer support",
+    description:
+      "Answer account, policy, and setup questions from the context you provide.",
+  },
+  {
+    number: "02",
+    title: "Pre-sales",
+    description: "Explain product fit, requirements, and setup.",
+  },
+  {
+    number: "03",
+    title: "Product guidance",
+    description: "Guide visitors through features and installation.",
+  },
+] as const
+
+const controlPoints = [
+  {
+    title: "Knowledge",
+    description: "Add the business context used for answers.",
+    detail: "Business context",
+  },
+  {
+    title: "Instructions",
+    description: "Define tone, behavior, and response style.",
+    detail: "Response rules",
+  },
+  {
+    title: "Appearance",
+    description: "Choose colors, launcher position, and offsets.",
+    detail: "Color and placement",
+  },
+  {
+    title: "Domains",
+    description: "Keep the widget public or restrict it to approved sites.",
+    detail: "Public or restricted",
+  },
+  {
+    title: "AI provider",
+    description:
+      "Use WidgetAI-managed AI or connect OpenRouter and select a model.",
+    detail: "Managed or OpenRouter",
+  },
+] as const
 ---
 
 <Layout
@@ -21,828 +70,597 @@ const structuredData = getHomepageStructuredData(
   keywords={siteConfig.defaultKeywords}
   structuredData={structuredData}
 >
-  <Navbar client:load />
+  <Navbar />
 
-  <main class="relative">
-    {/* Tall Hero Section with Breathing Room */}
-    <section class="relative z-10 pt-36 pb-24 md:pt-48">
+  <main class="home-page">
+    <section class="hero-section relative overflow-hidden pt-16">
       <div
-        class="mx-auto flex max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8"
+        class="mx-auto max-w-7xl px-5 pt-20 pb-12 sm:px-6 sm:pt-28 sm:pb-16 lg:px-8 lg:pt-32"
       >
-        {/* Eyebrow Label */}
-        <div
-          class="fade-in-up mb-8 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-sm font-medium text-primary opacity-0 transition-colors hover:bg-primary/20"
-          style="animation-delay: 0.1s;"
-        >
-          <span class="mr-2 flex h-2 w-2 animate-pulse rounded-full bg-primary"
-          ></span>
-          Meet WidgetAI 1.0
+        <div class="mb-7 flex items-center gap-3">
+          <span class="h-px w-8 bg-primary" aria-hidden="true"></span>
+          <p
+            class="text-[0.68rem] font-semibold tracking-[0.18em] text-primary uppercase"
+          >
+            AI answers, embedded on your site
+          </p>
         </div>
 
-        {/* Large Bold Headline */}
-        <h1
-          class="fade-in-up mb-6 max-w-4xl text-5xl font-extrabold tracking-tight text-balance text-foreground opacity-0 sm:text-6xl lg:text-7xl"
-          style="animation-delay: 0.2s;"
-        >
-          AI website widgets <br class="hidden sm:block" /> made simple.
-        </h1>
+        <div class="grid items-end gap-9 lg:grid-cols-12 lg:gap-8">
+          <div class="lg:col-span-8">
+            <h1
+              class="max-w-5xl text-[clamp(3.3rem,7vw,6.85rem)] leading-[0.91] font-semibold tracking-[-0.065em] text-balance text-foreground"
+            >
+              Your website can answer for itself.
+            </h1>
+          </div>
 
-        {/* Short Supporting Paragraph */}
-        <p
-          class="fade-in-up mb-10 max-w-2xl text-lg leading-relaxed text-balance text-muted-foreground opacity-0 sm:text-xl"
-          style="animation-delay: 0.3s;"
-        >
-          Control what your assistant knows, how it looks, and where it lives.
-          Install your custom AI with a single script tag and let it handle your
-          customer interactions effortlessly.
-        </p>
+          <div class="lg:col-span-4 lg:pb-2">
+            <p
+              class="max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8"
+            >
+              Turn your business context into a branded assistant for product,
+              sales, and support questions, then ship it with one script tag.
+            </p>
 
-        {/* Two CTA Buttons */}
-        <div
-          class="fade-in-up mb-16 flex w-full flex-col gap-4 opacity-0 sm:w-auto sm:flex-row md:mb-24"
-          style="animation-delay: 0.4s;"
-        >
-          <a
-            href={siteConfig.dashboardUrl}
-            class={cn(
-              buttonVariants({ size: "lg" }),
-              "h-12 w-full rounded-full px-8 text-base shadow-md hover:shadow-lg sm:w-auto"
-            )}
-          >
-            Start Building Your Widget
-          </a>
-          <a
-            href="#how-it-works"
-            class={cn(
-              buttonVariants({ size: "lg", variant: "outline" }),
-              "h-12 w-full rounded-full border-border/50 bg-background px-8 text-base hover:bg-muted/50 sm:w-auto"
-            )}
-          >
-            How it works
-          </a>
+            <div class="mt-7 grid gap-3 sm:flex lg:grid">
+              <LinkButton href={siteConfig.dashboardUrl} size="lg">
+                Create your widget
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  class="h-4 w-4"
+                >
+                  <path
+                    d="M3.5 8h9m-3.25-3.25L12.5 8l-3.25 3.25"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </LinkButton>
+              <LinkButton href="#how-it-works" variant="outline" size="lg">
+                See how it works
+              </LinkButton>
+            </div>
+          </div>
         </div>
 
-        {/* Large Dashboard Preview Anchored at the Bottom */}
-        {
-          /* Negative bottom margin forces it to slightly overlap the next section */
-        }
         <div
-          class="dashboard-preview-container relative z-20 mx-auto -mb-24 w-full max-w-6xl sm:-mb-48 lg:-mb-64 xl:max-w-[74rem]"
-          style="perspective: 1000px;"
+          id="product"
+          class="product-frame relative mt-14 scroll-mt-24 overflow-hidden border-y border-border/75 sm:mt-20"
         >
           <div
-            id="dashboard-preview"
-            class="relative h-full w-full transition-transform duration-75 ease-out"
-            style="transform: rotateX(15deg) translateY(40px) scale(0.95); opacity: 0;"
+            class="flex h-11 items-center justify-between border-b border-border/60 bg-background/72 px-4 sm:h-12 sm:px-5"
           >
-            
-
+            <div class="flex items-center gap-1.5" aria-hidden="true">
+              <span class="h-2 w-2 rounded-full bg-muted-foreground/35"></span>
+              <span class="h-2 w-2 rounded-full bg-muted-foreground/25"></span>
+              <span class="h-2 w-2 rounded-full bg-primary/70"></span>
+            </div>
             <div
-              class="rounded-lg border border-primary/30 bg-background/60 p-1 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.28)] backdrop-blur-sm sm:rounded-xl sm:p-1.5"
+              class="hidden items-center gap-2 font-mono text-[0.66rem] tracking-wide text-muted-foreground sm:flex"
             >
-              {/* Desktop Preview */}
+              <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+              dashboard.widgetai.youssef.tn
+            </div>
+            <span
+              class="font-mono text-[0.62rem] tracking-[0.14em] text-muted-foreground uppercase"
+            >
+              Dashboard preview
+            </span>
+          </div>
+
+          <figure
+            class="relative h-[34rem] overflow-hidden sm:aspect-[1.98/1] sm:h-auto"
+          >
+            <picture class="block h-full w-full">
+              <source
+                media="(max-width: 639px)"
+                srcset={previewMobileImage.src}
+              />
               <Image
                 src={previewImage}
-                alt="WidgetAI Dashboard Preview"
-                class="hidden h-auto w-full rounded-md border border-primary/15 object-cover shadow-sm sm:block sm:rounded-lg"
+                alt="WidgetAI dashboard showing configured website assistants and an embed snippet"
+                loading="eager"
+                fetchpriority="high"
+                widths={[800, 1200, 1600, 2200]}
+                sizes="(max-width: 1280px) 100vw, 1216px"
+                class="h-full w-full object-cover object-top"
               />
-              {/* Mobile Preview */}
-              <Image
-                src={previewMobileImage}
-                alt="WidgetAI Mobile Dashboard Preview"
-                class="block h-auto w-full rounded-lg border border-primary/15 object-cover shadow-sm sm:hidden"
-              />
+            </picture>
+
+            <div
+              class="pointer-events-none absolute inset-x-0 bottom-0 hidden h-28 bg-gradient-to-t from-background/75 to-transparent sm:block"
+              aria-hidden="true"
+            >
             </div>
+
+            <figcaption class="sr-only">
+              WidgetAI dashboard for configuring and installing website
+              assistants.
+            </figcaption>
+          </figure>
+        </div>
+
+        <dl
+          class="mt-8 grid border-y border-border/55 sm:grid-cols-2 lg:mt-10 lg:grid-cols-4"
+        >
+          <div class="py-5 sm:col-span-2 sm:pr-8 lg:col-span-1">
+            <dt
+              class="font-mono text-[0.65rem] tracking-[0.14em] text-primary uppercase"
+            >
+              Built for the web you have
+            </dt>
+            <dd class="mt-2 max-w-xs text-sm leading-6 text-muted-foreground">
+              Product proof, not a concept mockup.
+            </dd>
           </div>
+          <div
+            class="border-t border-border/55 py-5 sm:border-t-0 sm:border-l sm:pl-6"
+          >
+            <dt class="text-sm font-semibold text-foreground">No SDK</dt>
+            <dd class="mt-1 text-sm text-muted-foreground">One script tag</dd>
+          </div>
+          <div
+            class="border-t border-border/55 py-5 sm:border-l sm:pl-6 lg:border-t-0"
+          >
+            <dt class="text-sm font-semibold text-foreground">Any stack</dt>
+            <dd class="mt-1 text-sm text-muted-foreground">Plain web embed</dd>
+          </div>
+          <div
+            class="border-t border-border/55 py-5 sm:border-l sm:pl-6 lg:border-t-0"
+          >
+            <dt class="text-sm font-semibold text-foreground">Your rules</dt>
+            <dd class="mt-1 text-sm text-muted-foreground">
+              Context and domains
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="border-t border-border/50 py-16">
+      <div
+        class="mx-auto grid max-w-7xl gap-12 px-5 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8"
+      >
+        <div class="lg:col-span-4">
+          <p class="section-kicker">Use cases</p>
+          <h2 class="section-title mt-5 max-w-lg">
+            Give each question a focused assistant.
+          </h2>
+          <p class="mt-6 max-w-md text-base leading-7 text-muted-foreground">
+            Create separate widgets for support, pre-sales, or product guidance.
+            Each widget can use its own context and instructions.
+          </p>
+        </div>
+
+        <div class="border-t border-border/55 lg:col-span-7 lg:col-start-6">
+          {
+            useCases.map((useCase) => (
+              <article class="grid gap-3 border-b border-border/55 py-7 sm:grid-cols-[2.5rem_10rem_1fr] sm:items-start sm:gap-6 sm:py-8">
+                <span class="font-mono text-[0.66rem] tracking-[0.14em] text-primary">
+                  {useCase.number}
+                </span>
+                <h3 class="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+                  {useCase.title}
+                </h3>
+                <p class="max-w-xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+                  {useCase.description}
+                </p>
+              </article>
+            ))
+          }
         </div>
       </div>
     </section>
 
-    {/* How It Works Section */}
     <section
       id="how-it-works"
-      class="relative z-0  pt-36 pb-24 sm:pt-64 sm:pb-32"
+      class="scroll-mt-20 border-t border-border/50 py-16"
     >
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mx-auto mb-16 max-w-3xl text-center sm:mb-24">
-          <h2
-            class="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
-          >
-            How it works
-          </h2>
-          <p class="text-lg text-muted-foreground">
-            Get your AI assistant up and running in minutes. No coding required,
-            just answer a few questions and paste a script.
-          </p>
-        </div>
-
-        <div
-          class="mx-auto grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 lg:gap-12"
-        >
-          {/* Step 1 */}
-          <div
-            class="group relative flex flex-col items-center text-center sm:items-start sm:text-left"
-          >
-            <div
-              class="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl font-bold text-primary shadow-sm"
-            >
-              1
-            </div>
-            <h3 class="mb-3 text-xl font-semibold text-foreground">
-              Create a widget
-            </h3>
-            <p class="leading-relaxed text-muted-foreground">
-              Sign up and create your first AI widget. Give it a name and
-              customize its appearance to match your brand's colors and style.
-            </p>
+      <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
+          <div class="lg:col-span-6">
+            <p class="section-kicker">Setup</p>
+            <h2 class="section-title mt-5 max-w-2xl">
+              From business context to a live widget.
+            </h2>
           </div>
-
-          {/* Step 2 */}
-          <div
-            class="group relative flex flex-col items-center text-center sm:items-start sm:text-left"
-          >
-            <div
-              class="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl font-bold text-primary shadow-sm"
-            >
-              2
-            </div>
-            <h3 class="mb-3 text-xl font-semibold text-foreground">
-              Add context
-            </h3>
-            <p class="leading-relaxed text-muted-foreground">
-              Provide your business context and custom instructions. Tell the AI
-              what to answer, how to behave, and what features to highlight.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div
-            class="group relative flex flex-col items-center text-center sm:items-start sm:text-left"
-          >
-            <div
-              class="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-xl font-bold text-primary shadow-sm"
-            >
-              3
-            </div>
-            <h3 class="mb-3 text-xl font-semibold text-foreground">
-              Embed easily
-            </h3>
-            <p class="leading-relaxed text-muted-foreground">
-              Copy the generated code snippet and add it to your website. The
-              widget immediately appears and starts working for your visitors.
+          <div class="lg:col-span-5 lg:col-start-8 lg:pt-7">
+            <p class="section-copy">
+              Add what the assistant should know, match it to your site, then
+              copy the generated script tag.
             </p>
           </div>
         </div>
-      </div>
-    </section>
 
-    {/* Features Grid Section */}
-    <section id="features" class="relative z-10 bg-background py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mx-auto mb-16 max-w-3xl text-center sm:mb-20">
-          <h2
-            class="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+        <div class="mt-14 border-t border-border/55 sm:mt-16">
+          <article
+            class="workflow-row grid min-w-0 gap-10 py-10 sm:py-12 lg:grid-cols-12 lg:gap-12 lg:py-16"
           >
-            Everything you need
-          </h2>
-          <p class="text-lg text-muted-foreground">
-            Powerful capabilities wrapped in an elegant, minimal interface.
-            Built to give you full control over your AI assistant.
-          </p>
-        </div>
-
-        <div
-          class="grid auto-rows-[minmax(180px,auto)] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5"
-        >
-          {/* Card 1: Embeddable chat widget (Large square, spans 2x2) */}
-          <div
-            class="group relative flex flex-col items-center gap-6 overflow-hidden rounded-2xl border border-border/35 bg-background from-background to-secondary/5 p-6 shadow-xs transition-all hover:border-primary/18 hover:shadow-sm sm:p-7 md:col-span-2 md:flex-row lg:col-span-2 lg:row-span-2 lg:bg-gradient-to-br"
-          >
-            {/* Text Content Left */}
-            <div class="z-10 flex flex-col justify-center md:w-1/2">
-              <div
-                class="mb-5 inline-flex shrink-0 items-center justify-center text-primary"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-10 w-10"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
-                  ></path>
-                </svg>
-              </div>
+            <div class="lg:col-span-4">
+              <span class="step-number">01 / Context</span>
               <h3
-                class="mb-3 text-2xl font-bold tracking-tight text-foreground"
+                class="mt-6 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
               >
-                Embeddable Widget
+                Add the knowledge and rules.
               </h3>
-              <p class="text-sm leading-relaxed text-muted-foreground">
-                A beautifully designed chat interface that lives natively in the
-                bottom corner of your website, perfectly adapting to your
-                visitors.
+              <p
+                class="mt-5 max-w-md text-base leading-7 text-muted-foreground"
+              >
+                Provide the business context for this widget. Add instructions
+                for tone, behavior, and how to handle questions that the context
+                does not answer.
               </p>
             </div>
 
-            {/* Widget Preview Image Right */}
             <div
-              class="flex w-full items-center justify-center transition-transform duration-500 ease-out group-hover:scale-[1.03] md:w-1/2"
+              class="min-w-0 border-t border-border/55 lg:col-span-7 lg:col-start-6 lg:border-t-0 lg:border-l lg:pl-10"
             >
-              <Image
-                src={widgetPreviewImage}
-                alt="Widget Preview"
-                loading="lazy"
-                class="h-auto w-full max-w-[320px] rounded-2xl object-contain drop-shadow-2xl"
-              />
-            </div>
-          </div>
-
-          {/* Card 2: Simple installation (Wide rectangle, spans 2 cols) */}
-          <div
-            class="group relative flex flex-col justify-center rounded-2xl border border-border/35 bg-background px-4 py-5 shadow-xs transition-all hover:border-primary/18 hover:shadow-sm md:col-span-1 lg:col-span-2 lg:px-5 lg:py-6"
-          >
-            <div
-              class="mx-2 mb-4 inline-flex items-center justify-center text-primary lg:mx-3"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-10 w-10"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
-                ></path>
-              </svg>
-            </div>
-            <h3
-              class="mx-2 mb-2 text-xl font-semibold tracking-tight text-foreground lg:mx-3"
-            >
-              1-Minute Install
-            </h3>
-            <p
-              class="mx-2 mb-6 max-w-md text-sm leading-relaxed text-muted-foreground lg:mx-3"
-            >
-              Just copy a single lightweight script tag into your website. Works
-              independent of your tech stack.
-            </p>
-            {/* The Script Wrapper */}
-            <div class="mt-auto w-full overflow-hidden">
               <div
-                class="flex w-full flex-col rounded-xl border border-border/50 bg-[#1e1e1e] px-2 py-3 font-mono text-xs leading-relaxed break-all whitespace-pre-wrap shadow-inner sm:px-3 sm:text-sm md:text-base"
+                class="flex items-center justify-between border-b border-border/55 py-4"
               >
-                <div>
-                  <span class="text-gray-400">&lt;</span><span
-                    class="text-[#569cd6]">script</span
-                  >
-                </div>
-                <div class="pl-2">
-                  <span class="text-[#9cdcfe]">src</span><span
-                    class="text-gray-400">=</span
-                  ><span class="text-[#ce9178]"
-                    >{`"${siteConfig.embedScriptUrl}"`}</span
-                  >
-                </div>
-                <div class="pl-2">
-                  <span class="text-[#9cdcfe]">data-widget-id</span><span
-                    class="text-gray-400">=</span
-                  ><span class="text-[#ce9178]">"..."</span><span
-                    class="text-gray-400">&gt;</span
-                  >
-                </div>
-                <div>
-                  <span class="text-gray-400">&lt;/</span><span
-                    class="text-[#569cd6]">script</span
-                  ><span class="text-gray-400">&gt;</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Widget customization (Small square, 11) */}
-          <div
-            class="group relative flex flex-col justify-end rounded-2xl border border-border/35 bg-background p-5 shadow-xs transition-all hover:border-primary/18 hover:shadow-sm md:col-span-1 lg:col-span-1"
-          >
-            <div
-              class="mb-auto inline-flex h-12 w-12 items-center text-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-9 w-9"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.55l3.834-3.834a3 3 0 00-4.242-4.242L8.528 10.33A16.002 16.002 0 009.53 16.12zm5.72-9.76L16.24 5.37c.395-.395 1.032-.395 1.43 0l1.414 1.414c.395.395.395 1.032 0 1.43l-1.01 1.01"
-                ></path>
-              </svg>
-            </div>
-            <h3
-              class="mb-2 text-lg font-semibold tracking-tight text-foreground"
-            >
-              Custom Style
-            </h3>
-            <p
-              class="line-clamp-2 text-sm leading-relaxed text-muted-foreground"
-            >
-              Tweak colors and panel themes to match your brand completely.
-            </p>
-          </div>
-
-          {/* Card 4: Domain restrictions (Small square, 11) */}
-          <div
-            class="group relative flex flex-col justify-end rounded-2xl border border-border/35 bg-background p-5 shadow-xs transition-all hover:border-primary/18 hover:shadow-sm md:col-span-1 lg:col-span-1"
-          >
-            <div
-              class="mb-auto inline-flex h-12 w-12 items-center text-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-9 w-9"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
-                ></path>
-              </svg>
-            </div>
-            <h3
-              class="mb-2 text-lg font-semibold tracking-tight text-foreground"
-            >
-              Domain Auth
-            </h3>
-            <p
-              class="line-clamp-2 text-sm leading-relaxed text-muted-foreground"
-            >
-              Secure your widget by allowing it to load only on approved sites.
-            </p>
-          </div>
-
-          {/* Card 5: AI configuration (Wide rectangle, spans 2 cols) */}
-          <div
-            class="group relative flex flex-col gap-5 rounded-2xl border border-border/35 bg-background p-5 shadow-xs transition-all hover:border-primary/18 hover:shadow-sm sm:flex-row sm:items-center md:col-span-2 lg:col-span-2 lg:p-6"
-          >
-            <div
-              class="inline-flex h-12 w-12 shrink-0 items-center text-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-9 w-9"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-16.5v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"
-                ></path>
-              </svg>
-            </div>
-            <div>
-              <h3
-                class="mb-2 text-xl font-semibold tracking-tight text-foreground"
-              >
-                AI Configuration
-              </h3>
-              <p class="text-sm leading-relaxed text-muted-foreground">
-                Use our built-in models out of the box, or securely plug in your
-                own API credentials to run specific customized models.
-              </p>
-            </div>
-          </div>
-
-          {
-            /* Card 6: Context-based answers (Wide rectangle, spans 2 cols on lg) */
-          }
-          <div
-            class="group relative flex flex-col justify-center rounded-2xl border border-border/35 bg-background p-5 shadow-xs transition-all hover:border-primary/18 hover:shadow-sm md:col-span-2 lg:col-span-2 lg:p-6"
-          >
-            <div class="mb-5 flex items-center gap-6">
-              <div
-                class="inline-flex h-10 w-10 shrink-0 items-center justify-center text-primary"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-9 w-9"
+                <span class="text-xs font-semibold text-foreground"
+                  >Widget knowledge</span
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                  ></path>
-                </svg>
-              </div>
-              <div>
-                <h3
-                  class="mb-2 text-xl font-semibold tracking-tight text-foreground"
+                <span
+                  class="flex items-center gap-2 text-xs text-muted-foreground"
                 >
-                  Context & Instructions
-                </h3>
-                <p class="text-sm leading-relaxed text-muted-foreground">
-                  Train your assistant on your exact business knowledge,
-                  specific FAQs, and behavioral rules.
-                </p>
+                  <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+                  Saved
+                </span>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* FAQ Section */}
-    <section id="faq" class="relative z-0  py-24 sm:py-32">
-      <div class="mx-auto max-w-3xl px-6 lg:px-8">
-        <div class="mb-16 text-center">
-          <h2
-            class="text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl"
-          >
-            Frequently Asked Questions
-          </h2>
-          <p class="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Everything you need to know about setting up and using the AI widget
-            platform.
-          </p>
-        </div>
-
-        <div class="faq-accordion space-y-2">
-          {
-            faqItems.map((item, index) => {
-              const answerId = `faq-answer-${index + 1}`
-
-              return (
-                <div class="faq-item overflow-hidden border-b border-border/20">
-                  <button
-                    type="button"
-                    class="faq-button flex w-full cursor-pointer items-center justify-between py-5 text-left text-lg font-semibold text-foreground transition-[color,transform] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] outline-none hover:text-primary active:scale-[0.992]"
-                    aria-expanded="false"
-                    aria-controls={answerId}
-                  >
-                    <span>{item.question}</span>
-                    <span class="faq-icon relative flex h-6 w-6 shrink-0 items-center justify-center transition-transform duration-300">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="absolute transition-transform duration-300"
-                      >
-                        <>
-                          <path d="M5 12h14" />
-                          <path
-                            d="M12 5v14"
-                            class="vertical-line transition-transform duration-300"
-                          />
-                        </>
-                      </svg>
-                    </span>
-                  </button>
+              <div class="grid sm:grid-cols-2">
+                <div
+                  class="border-b border-border/55 py-6 sm:border-r sm:border-b-0 sm:pr-8"
+                >
+                  <p class="ui-label">Business context</p>
                   <div
-                    id={answerId}
-                    class="faq-content grid grid-rows-[0fr] opacity-0 transition-all duration-300"
+                    class="mt-4 space-y-3 text-sm leading-6 text-muted-foreground"
                   >
-                    <div class="overflow-hidden">
-                      <p class="pb-6 leading-relaxed text-muted-foreground">
-                        {item.answer}
-                      </p>
-                    </div>
+                    <p class="text-foreground">
+                      WidgetAI helps websites answer visitor questions.
+                    </p>
+                    <p>
+                      Each assistant uses the business knowledge configured for
+                      that widget.
+                    </p>
+                    <p>Installation uses a generated JavaScript embed tag.</p>
                   </div>
                 </div>
-              )
-            })
-          }
-        </div>
-      </div>
-    </section>
+                <div class="py-6 sm:pl-8">
+                  <p class="ui-label">Instructions</p>
+                  <ul
+                    class="mt-4 space-y-4 text-sm leading-6 text-muted-foreground"
+                  >
+                    <li class="flex gap-3">
+                      <span
+                        class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-primary"
+                      ></span>
+                      Be concise and direct.
+                    </li>
+                    <li class="flex gap-3">
+                      <span
+                        class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-primary"
+                      ></span>
+                      Use only the supplied context.
+                    </li>
+                    <li class="flex gap-3">
+                      <span
+                        class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-primary"
+                      ></span>
+                      Say when an answer is unknown.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
 
-    {/* Final CTA Section */}
-    <section class="relative overflow-hidden bg-primary py-24 sm:py-32">
-      <div
-        class="absolute inset-0 z-0 bg-gradient-to-br from-primary via-primary to-primary/80"
-      >
-      </div>
-      <div
-        class="relative z-10 mx-auto max-w-4xl px-6 text-center text-primary-foreground lg:px-8"
-      >
-        <h2
-          class="mb-6 text-4xl font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl"
-        >
-          Ready to supercharge your website?
-        </h2>
-        <p
-          class="mx-auto mb-10 max-w-2xl text-lg leading-relaxed font-medium text-balance text-primary-foreground/90 sm:text-xl"
-        >
-          Launch a custom AI assistant in minutes, control its knowledge, and
-          manage everything from one intuitive dashboard.
-        </p>
-        <div class="flex justify-center">
-          <a
-            href={siteConfig.dashboardUrl}
-            class="inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-background px-8 text-base font-semibold text-foreground shadow-md transition-[background-color,box-shadow,transform] duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-background/95 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background active:translate-y-[1px] active:scale-[0.986] active:shadow-sm md:h-14 md:px-10 md:text-lg"
+          <article
+            class="workflow-row grid min-w-0 gap-10 py-10 sm:py-12 lg:grid-cols-12 lg:gap-12 lg:py-16"
           >
-            Get started for free
-          </a>
+            <div class="lg:col-span-4">
+              <span class="step-number">02 / Appearance</span>
+              <h3
+                class="mt-6 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
+              >
+                Match the widget to your site.
+              </h3>
+              <p
+                class="mt-5 max-w-md text-base leading-7 text-muted-foreground"
+              >
+                Choose the primary color, panel background, launcher position,
+                and offsets.
+              </p>
+            </div>
+
+            <div
+              class="min-w-0 border-t border-border/55 lg:col-span-7 lg:col-start-6 lg:border-t-0 lg:border-l lg:pl-10"
+            >
+              <div class="grid sm:grid-cols-[0.72fr_1.28fr]">
+                <dl class="border-y border-border/55 sm:self-center">
+                  <div class="setting-row">
+                    <dt>Primary color</dt>
+                    <dd class="flex items-center gap-2">
+                      <span class="h-3.5 w-3.5 rounded-sm bg-primary"></span>
+                      Lime
+                    </dd>
+                  </div>
+                  <div class="setting-row">
+                    <dt>Panel</dt>
+                    <dd>Light</dd>
+                  </div>
+                  <div class="setting-row">
+                    <dt>Launcher</dt>
+                    <dd>Bottom right</dd>
+                  </div>
+                  <div class="setting-row">
+                    <dt>Offsets</dt>
+                    <dd>24px / 24px</dd>
+                  </div>
+                </dl>
+                <div
+                  class="flex items-center justify-center pt-8 sm:border-l sm:border-border/55 sm:pt-0 sm:pl-10"
+                >
+                  <Image
+                    src={widgetPreviewImage}
+                    alt="Preview of WidgetAI with lime brand styling"
+                    loading="lazy"
+                    widths={[240, 320, 480]}
+                    sizes="(max-width: 640px) 68vw, 260px"
+                    class="w-full max-w-[16rem]"
+                  />
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="workflow-row grid min-w-0 gap-10 py-10 sm:py-12 lg:grid-cols-12 lg:gap-12 lg:py-16"
+          >
+            <div class="lg:col-span-4">
+              <span class="step-number">03 / Install</span>
+              <h3
+                class="mt-6 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
+              >
+                Copy the generated script tag.
+              </h3>
+              <p
+                class="mt-5 max-w-md text-base leading-7 text-muted-foreground"
+              >
+                Paste the JavaScript tag into your site. The embed works
+                independently of your frontend framework.
+              </p>
+            </div>
+
+            <div
+              class="min-w-0 border-t border-border/55 lg:col-span-7 lg:col-start-6 lg:border-t-0 lg:border-l lg:pl-10"
+            >
+              <div
+                class="flex items-center justify-between border-b border-border/55 py-4"
+              >
+                <span class="text-xs font-semibold text-foreground"
+                  >Install widget</span
+                >
+                <span
+                  class="font-mono text-[0.62rem] tracking-[0.12em] text-primary uppercase"
+                  >Ready to embed</span
+                >
+              </div>
+              <div
+                class="max-w-full min-w-0 overflow-x-auto border-b border-border/55 py-7 pl-5 [border-left:2px_solid_var(--primary)]"
+              >
+                <pre
+                  class="min-w-[29rem] font-mono text-[0.7rem] leading-6 sm:text-xs"><code><span class="text-muted-foreground">&lt;</span><span class="text-[#7db7ff]">script</span>
+  <span class="text-[#b8d7ff]">src</span><span class="text-muted-foreground">=</span><span class="text-[#d5ee94]">"{siteConfig.embedScriptUrl}"</span>
+  <span class="text-[#b8d7ff]">data-widget-id</span><span class="text-muted-foreground">=</span><span class="text-[#d5ee94]">"widget_xxxxxxxx"</span>
+<span class="text-muted-foreground">&gt;&lt;/</span><span class="text-[#7db7ff]">script</span><span class="text-muted-foreground">&gt;</span></code></pre>
+              </div>
+              <dl class="grid border-b border-border/55 sm:grid-cols-2">
+                <div class="py-5 sm:pr-8">
+                  <dt class="ui-label">Approved domain</dt>
+                  <dd class="mt-2 text-sm font-medium text-foreground">
+                    widgetai.youssef.tn
+                  </dd>
+                </div>
+                <div
+                  class="border-t border-border/55 py-5 sm:border-t-0 sm:border-l sm:pl-8"
+                >
+                  <dt class="ui-label">Widget status</dt>
+                  <dd
+                    class="mt-2 flex items-center gap-2 text-sm font-medium text-foreground"
+                  >
+                    <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+                    Public
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <script>
-      // Smooth collapse/expand via CSS Grid transition
-      const buttons = document.querySelectorAll(".faq-button")
+    <section id="features" class="scroll-mt-20 border-y border-border/50 py-16">
+      <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
+          <div class="lg:col-span-6">
+            <p class="section-kicker">Widget settings</p>
+            <h2 class="section-title mt-5 max-w-2xl">
+              Control each widget directly.
+            </h2>
+          </div>
+          <div class="lg:col-span-5 lg:col-start-8 lg:pt-7">
+            <p class="section-copy">
+              Set its knowledge, instructions, appearance, domain access, and AI
+              provider from the dashboard.
+            </p>
+          </div>
+        </div>
 
-      buttons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const item = button.closest(".faq-item")
-          if (!item) return
-
-          const content = item.querySelector(".faq-content")
-          const verticalLine = item.querySelector(".vertical-line")
-          if (!content || !verticalLine) return
-
-          const isOpen = item.classList.contains("is-open")
-          button.setAttribute("aria-expanded", String(!isOpen))
-
-          // Close all logic (Optional, but keeps the layout clean)
-          document.querySelectorAll(".faq-item").forEach((otherItem) => {
-            if (otherItem !== item) {
-              otherItem.classList.remove("is-open")
-              const otherButton = otherItem.querySelector(".faq-button")
-              const otherContent = otherItem.querySelector(".faq-content")
-              const otherVerticalLine =
-                otherItem.querySelector(".vertical-line")
-
-              if (otherButton) {
-                otherButton.setAttribute("aria-expanded", "false")
-              }
-              if (otherContent) {
-                otherContent.classList.remove("grid-rows-[1fr]", "opacity-100")
-                otherContent.classList.add("grid-rows-[0fr]", "opacity-0")
-              }
-              if (otherVerticalLine) {
-                otherVerticalLine.classList.remove("rotate-90", "opacity-0")
-              }
-            }
-          })
-
-          // Toggle current
-          if (isOpen) {
-            item.classList.remove("is-open")
-            content.classList.remove("grid-rows-[1fr]", "opacity-100")
-            content.classList.add("grid-rows-[0fr]", "opacity-0")
-            verticalLine.classList.remove("rotate-90", "opacity-0")
-          } else {
-            item.classList.add("is-open")
-            content.classList.remove("grid-rows-[0fr]", "opacity-0")
-            content.classList.add("grid-rows-[1fr]", "opacity-100")
-            verticalLine.classList.add("rotate-90", "opacity-0")
+        <div class="mt-14 border-t border-border/55 sm:mt-16">
+          {
+            controlPoints.map((point, index) => (
+              <article class="grid gap-3 border-b border-border/55 py-7 sm:py-8 lg:grid-cols-12 lg:items-start lg:gap-8">
+                <span class="font-mono text-[0.65rem] text-primary lg:col-span-1">
+                  0{index + 1}
+                </span>
+                <h3 class="text-lg font-semibold tracking-tight text-foreground lg:col-span-3">
+                  {point.title}
+                </h3>
+                <p class="max-w-xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7 lg:col-span-5">
+                  {point.description}
+                </p>
+                <span class="font-mono text-[0.65rem] tracking-wide text-muted-foreground lg:col-span-3 lg:text-right">
+                  {point.detail}
+                </span>
+              </article>
+            ))
           }
-        })
-      })
+        </div>
+      </div>
+    </section>
 
-      // Dashboard Preview Parallax Animation
-      const preview = document.getElementById("dashboard-preview")
-      if (preview) {
-        const handleScroll = () => {
-          const scrollY = window.scrollY
-          // Calculate progress based on scroll position (0 to 1 over 500px)
-          const progress = Math.min(scrollY / 500, 1)
+    <section id="faq" class="scroll-mt-20 py-16">
+      <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-4">
+            <p class="section-kicker">FAQ</p>
+            <h2 class="section-title mt-5">
+              Straight answers before you add the tag.
+            </h2>
+            <p
+              class="mt-6 max-w-sm text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7"
+            >
+              Need something more specific? Email us and we’ll help you decide
+              whether WidgetAI fits your site.
+            </p>
+            <a
+              href={siteConfig.supportEmailHref}
+              class="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              Contact support
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                fill="none"
+                class="h-3.5 w-3.5"
+              >
+                <path
+                  d="M3.5 8h9m-3.25-3.25L12.5 8l-3.25 3.25"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </div>
 
-          // Animate rotation, translation, scale, and opacity
-          const rotateX = 15 - progress * 15 // from 15deg to 0deg
-          const translateY = 40 - progress * 40 // from 40px to 0px
-          const scale = 0.95 + progress * 0.05 // from 0.95 to 1
-          const opacity = 0.5 + progress * 0.5 // from 0.5 to 1
+          <FaqAccordion items={faqItems} />
+        </div>
+      </div>
+    </section>
 
-          preview.style.transform = `rotateX(${rotateX}deg) translateY(${translateY}px) scale(${scale})`
-          preview.style.opacity = progress > 0 ? opacity.toString() : "0.5"
-        }
-
-        window.addEventListener(
-          "scroll",
-          () => {
-            requestAnimationFrame(handleScroll)
-          },
-          { passive: true }
-        )
-
-        // Initial setup on load
-        handleScroll()
-      }
-
-      // Intersection Observer for Smooth Scroll Animations
-      const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1,
-      }
-
-      const scrollObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible")
-            observer.unobserve(entry.target) // Optional: stop observing once animated
-          }
-        })
-      }, observerOptions)
-
-      // Select sections to animate
-      const animateSelectors = [
-        "#how-it-works .text-center",
-        "#how-it-works .group",
-        "#features .text-center",
-        "#features .group",
-        "#faq .text-center",
-        "#faq .faq-item",
-        "footer",
-      ]
-
-      document
-        .querySelectorAll(animateSelectors.join(", "))
-        .forEach((el, index) => {
-          el.classList.add("scroll-animate")
-          // Add staggered delay to group elements (like cards in a grid)
-          if (
-            el instanceof HTMLElement &&
-            (el.classList.contains("group") ||
-              el.classList.contains("faq-item"))
-          ) {
-            const delay = (index % 3) * 0.1
-            el.style.transitionDelay = `${delay}s`
-          }
-          scrollObserver.observe(el)
-        })
-    </script>
+    <section class="pb-12 sm:pb-16">
+      <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div
+          class="cta-panel relative overflow-hidden rounded-2xl bg-primary px-6 py-12 text-primary-foreground sm:px-10 sm:py-16 lg:px-14 lg:py-20"
+        >
+          <div class="relative z-10 grid items-end gap-10 lg:grid-cols-12">
+            <div class="lg:col-span-8">
+              <p
+                class="font-mono text-[0.66rem] font-semibold tracking-[0.16em] uppercase opacity-65"
+              >
+                Your context. Your rules. Your website.
+              </p>
+              <h2
+                class="mt-5 max-w-4xl text-4xl leading-[0.98] font-semibold tracking-[-0.05em] text-balance sm:text-5xl lg:text-7xl"
+              >
+                Put a useful assistant on your site.
+              </h2>
+            </div>
+            <div class="lg:col-span-4">
+              <p
+                class="max-w-md text-sm leading-6 opacity-70 sm:text-base sm:leading-7"
+              >
+                Create the widget, add your business context, and ship it with
+                one tag.
+              </p>
+              <LinkButton
+                href={siteConfig.dashboardUrl}
+                variant="inverse"
+                size="lg"
+                class="mt-7 w-full sm:w-auto"
+              >
+                Create your widget
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  class="h-4 w-4"
+                >
+                  <path
+                    d="M3.5 8h9m-3.25-3.25L12.5 8l-3.25 3.25"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </LinkButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  {/* Footer Section */}
-  <footer class="relative border-t border-border/40 bg-background pt-20 pb-10">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="flex flex-col justify-between gap-12 lg:flex-row lg:gap-8">
-        {/* Brand & Description */}
-        <div class="max-w-sm">
+  <footer class="site-footer border-t border-border/50 py-10 sm:py-12">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="grid gap-10 md:grid-cols-[1fr_auto] md:items-start">
+        <div>
           <a
             href="/"
-            class="mb-5 flex w-fit items-center gap-2 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label="WidgetAI home"
+            class="inline-flex min-h-11 items-center rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <Image
               src={logoImage}
-              alt="WidgetAI Logo"
-              class="h-8 w-auto object-contain"
+              alt="WidgetAI"
+              width={154}
+              height={40}
+              class="h-7 w-auto"
             />
           </a>
-          <p class="text-sm leading-relaxed text-muted-foreground">
-            Add a custom AI assistant to your website in minutes. Control its
-            knowledge, customize its look, and manage everything from one
-            dashboard.
+          <p class="mt-4 max-w-md text-sm leading-6 text-muted-foreground">
+            Turn the business context you provide into an AI assistant embedded
+            on your website.
           </p>
         </div>
 
-        {/* Link Groups */}
-        <div class="flex flex-wrap gap-12 sm:gap-16 md:gap-24">
-          <div>
-            <h3
-              class="mb-4 text-sm font-semibold tracking-wide text-foreground"
-            >
-              Product
-            </h3>
-            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
-              <li>
-                <a
-                  href="#features"
-                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
-                  >Features</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#how-it-works"
-                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
-                  >How it works</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#faq"
-                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
-                  >FAQ</a
-                >
-              </li>
-              <li>
-                <a
-                  href={siteConfig.dashboardUrl}
-                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
-                  >Sign in</a
-                >
-              </li>
-              <li>
-                <a
-                  href={siteConfig.supportEmailHref}
-                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
-                  >Support</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3
-              class="mb-4 text-sm font-semibold tracking-wide text-foreground"
-            >
-              Legal
-            </h3>
-            <ul class="flex flex-col gap-3 text-sm text-muted-foreground">
-              <li>
-                <a
-                  href={siteConfig.privacyUrl}
-                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
-                  >Privacy Policy</a
-                >
-              </li>
-              <li>
-                <a
-                  href={siteConfig.termsUrl}
-                  class="underline-offset-4 transition-all outline-none hover:text-primary hover:underline focus-visible:text-primary"
-                  >Terms of Service</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
+        <nav
+          class="grid grid-cols-2 gap-x-12 gap-y-3 text-sm text-muted-foreground sm:grid-cols-3"
+          aria-label="Footer navigation"
+        >
+          <a class="footer-link" href="#product">Product</a>
+          <a class="footer-link" href="#how-it-works">How it works</a>
+          <a class="footer-link" href="#features">Control</a>
+          <a class="footer-link" href="#faq">FAQ</a>
+          <a class="footer-link" href={siteConfig.privacyUrl}>Privacy</a>
+          <a class="footer-link" href={siteConfig.termsUrl}>Terms</a>
+        </nav>
       </div>
 
-      {/* Copyright Bottom Bar */}
       <div
-        class="mt-16 flex items-center justify-center border-t border-border/40 pt-8"
+        class="mt-10 flex flex-col gap-3 border-t border-border/50 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
       >
-        <p class="text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} WidgetAI. All rights reserved.
-        </p>
+        <p>&copy; {new Date().getFullYear()} WidgetAI.</p>
+        <a class="footer-link" href={siteConfig.supportEmailHref}
+          >{siteConfig.supportEmail}</a
+        >
       </div>
     </div>
   </footer>
-
-  <script
-    is:inline
-    src="https://api.widgetai.dhibi.tn/widget/embed.js"
-    data-widget-id="widget_68948c13a96e4a3986284ee886f88154"
-  ></script>
-
-  <style>
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in-up {
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    /* Scroll Animations */
-    .scroll-animate {
-      opacity: 0;
-      transform: translateY(30px);
-      transition:
-        opacity 0.8s ease-out,
-        transform 0.8s ease-out;
-    }
-
-    .scroll-animate.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
 </Layout>

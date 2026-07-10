@@ -1,0 +1,30 @@
+.site-navbar .nav-link {
+  padding-block: 0.4rem;
+}
+
+.site-navbar .nav-link:hover {
+  color: var(--foreground);
+}
+
+.site-navbar .mobile-nav-link {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  border-radius: var(--radius-md);
+  padding-inline: 0.8rem;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+}
+
+.site-navbar .mobile-nav-link:hover {
+  background: color-mix(in oklab, var(--muted) 42%, transparent);
+  color: var(--foreground);
+}
+
+.site-navbar .nav-link:focus-visible,
+.site-navbar .mobile-nav-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

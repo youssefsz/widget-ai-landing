@@ -7,9 +7,9 @@ export const siteConfig = {
   locale: "en_US",
   themeColor: "#131722",
   backgroundColor: "#131722",
-  defaultTitle: "WidgetAI | AI Website Widgets You Can Launch in Minutes",
+  defaultTitle: "WidgetAI | Embed a Branded AI Assistant on Your Website",
   defaultDescription:
-    "Launch a branded AI website widget in minutes. Control answers with business context, customize the design, restrict approved domains, and install with one script tag.",
+    "Create a branded AI website widget. Control answers with business context and instructions, restrict approved domains, and install it with one script tag.",
   defaultKeywords: [
     "AI website widget",
     "website chatbot",
@@ -33,29 +33,34 @@ export const siteConfig = {
 
 export const faqItems = [
   {
-    question: "How does the widget work?",
+    question: "What does WidgetAI use to answer questions?",
     answer:
-      "You sign in, create a widget in your private dashboard, add business context and instructions, then install the chat interface on your website with a single lightweight script tag.",
+      "Each widget answers from the business context you add in the dashboard, plus optional instructions for tone and behavior. You decide what information and rules it receives.",
   },
   {
-    question: "How do I control the AI's answers?",
+    question: "Do I need a framework or SDK?",
     answer:
-      "The assistant answers from the business context you provide for each widget. You can also add system instructions to control tone, style, and how responses should be formatted.",
+      "No. Add the generated script tag to your site. The embed is plain JavaScript and works independently of your frontend stack.",
   },
   {
-    question: "Can the widget be customized to match my branding?",
+    question: "How do I control the assistant's answers?",
     answer:
-      "Yes. You can customize key visual settings such as the primary brand color and the panel background so the widget feels native to your site.",
+      "The assistant answers from the context you provide for each widget. You can also add instructions to control tone, behavior, and how responses should be formatted.",
   },
   {
-    question: "Can I restrict where the widget is loaded?",
+    question: "What can I customize?",
     answer:
-      "Yes. Domain allowlisting lets you restrict each widget to approved websites so it cannot be embedded on unauthorized domains.",
+      "You can set the primary brand color, panel background, launcher placement, and offsets so the widget fits the surrounding site.",
   },
   {
-    question: "Can I use my own AI credentials?",
+    question: "Can I control where a widget runs?",
     answer:
-      "Yes. In addition to platform-managed usage, you can provide your own OpenRouter credentials and choose custom models that fit your workflow and cost requirements.",
+      "Yes. Leave it public, or use domain allowlisting to limit the websites that may use it.",
+  },
+  {
+    question: "Can I use my own AI model?",
+    answer:
+      "Yes. Use WidgetAI-managed AI, or connect your OpenRouter credentials and choose a model that fits your workflow.",
   },
 ] as const
 
@@ -121,11 +126,6 @@ export function getHomepageStructuredData(site: URL): StructuredData[] {
         "@type": "Organization",
         name: siteConfig.name,
         url: homepageUrl,
-      },
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
       },
       featureList: [
         "Embeddable AI website widget",
