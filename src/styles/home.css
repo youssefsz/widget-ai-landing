@@ -69,10 +69,11 @@
 .note { font-size: 14px; color: var(--muted-foreground); }
 
 /* ---------- call and response ---------- */
-.calls { padding: var(--section) var(--margin); display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); }
-.calls .col { grid-column: 3 / 12; display: grid; gap: 96px; }
+/* one centred column: heading and lines stay left-aligned inside it, the block sits in the middle of the page */
+.calls { padding: var(--section) var(--margin); }
+.calls .col { width: min(100%, 980px); margin-inline: auto; display: grid; gap: 96px; }
 .calls h2 { font-size: clamp(40px, 4.6vw, 76px); letter-spacing: -0.055em; }
-.call .what { font-size: clamp(22px, 2.3vw, 34px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.15; max-width: 32ch; }
+.call .what { font-size: clamp(22px, 2.3vw, 34px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.15; }
 .call .back { margin-top: 1.4rem; padding-left: 1.4rem; border-left: 3px solid var(--primary); }
 .call .back .what { color: var(--primary); }
 
@@ -188,12 +189,21 @@
   @keyframes rise { to { opacity: 1; transform: none; } }
 }
 
-/* ---------- desktop: the whole hero (photo, headline, sentence, buttons) fits in one screen ----------
-   The photo keeps its 3:2 shape and left edge; on shorter screens only the photo is capped by the window's height
-   (100svh minus the ~26.5rem the header, headline, sentence and buttons need), never below 440px wide. */
+/* ---------- desktop: the whole hero fits in one screen, centred ----------
+   The column is exactly as wide as the photo, so photo, headline, sentence and buttons share both edges
+   and the block sits in the middle of the page. On shorter screens the photo (and with it the column) is
+   capped by the window's height: 100svh minus the ~26.5rem the header and text need, never below 440px. */
 @media (min-width: 761px) {
-  .exhibit .stage { width: min(100%, max(440px, calc((100svh - 26.5rem) * 1.5))); }
+  .exhibit { width: min(46vw, 760px, max(440px, calc((100svh - 26.5rem) * 1.5))); }
   .exhibit h1 { font-size: clamp(40px, min(5.4vw, 8.5svh), 92px); }
+  .exhibit p { max-width: none; }
+}
+/* short desktop windows: tighten the spacing under the photo a little so everything still fits */
+@media (min-width: 761px) and (max-height: 780px) {
+  .exhibit { margin-top: 1vh; }
+  .exhibit h1 { margin-top: 1.5rem; }
+  .exhibit p { margin-top: 0.75rem; font-size: 17px; }
+  .exhibit .acts { margin-top: 1.2rem; }
 }
 
 /* ---------- tablet ---------- */
@@ -215,7 +225,7 @@
   .io .in, .io .out { padding: 3rem 20px; }
   .io pre { font-size: 13px; max-height: 50vh; overflow: auto; }
   .chat .log { max-height: 56vh; }
-  .calls { display: block; padding: 6rem 20px; }
+  .calls { padding: 6rem 20px; }
   .calls .col { gap: 56px; }
   .call .what { font-size: 21px; }
   .ex2 { display: block; padding: 0 20px 6rem; }
