@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css"
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url"
 import { getAbsoluteUrl, siteConfig, type StructuredData } from "@/lib/site"
 
 interface Props {
@@ -30,6 +31,10 @@ const pageTitle = title.includes(siteConfig.name)
   : `${title} | ${siteConfig.name}`
 const canonicalUrl = getAbsoluteUrl(canonicalPath, site)
 const imageUrl = getAbsoluteUrl(image, site)
+const imageType =
+  siteConfig.ogImage.format === "jpg"
+    ? "image/jpeg"
+    : `image/${siteConfig.ogImage.format}`
 const robotsContent = noindex
   ? "noindex, nofollow"
   : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
@@ -38,31 +43,37 @@ const schemas = (
 ).filter(Boolean)
 ---
 
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add("js")
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords.join(", ")} />
-    <meta name="author" content={siteConfig.name} />
+    <meta name="author" content="Youssef Dhibi" />
     <meta name="application-name" content={siteConfig.name} />
     <meta name="theme-color" content={siteConfig.themeColor} />
+    <meta name="color-scheme" content="dark" />
     <meta name="robots" content={robotsContent} />
     <meta name="googlebot" content={robotsContent} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="preload"
+      href={interLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <slot name="head" />
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicons/favicon-16x16.png"
-    />
     <link
       rel="icon"
       type="image/png"
@@ -85,10 +96,7 @@ const schemas = (
     <meta property="og:locale" content={siteConfig.locale} />
     <meta property="og:image" content={imageUrl} />
     <meta property="og:image:secure_url" content={imageUrl} />
-    <meta
-      property="og:image:type"
-      content={`image/${siteConfig.ogImage.format}`}
-    />
+    <meta property="og:image:type" content={imageType} />
     <meta
       property="og:image:width"
       content={siteConfig.ogImage.width.toString()}
@@ -115,14 +123,7 @@ const schemas = (
       ))
     }
   </head>
-  <body
-    class="min-h-screen bg-background text-foreground selection:bg-primary/30"
-  >
+  <body>
     <slot />
-    <script
-      is:inline
-      src="https://api.widgetai.dhibi.tn/widget/embed.js"
-      data-widget-id="widget_68948c13a96e4a3986284ee886f88154"
-    ></script>
   </body>
 </html>

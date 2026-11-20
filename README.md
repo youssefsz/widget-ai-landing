@@ -1,10 +1,10 @@
 # WidgetAI Landing Page
 
-Public landing page for WidgetAI, built with Astro, React, TypeScript, and Tailwind CSS.
+Public landing page for WidgetAI, built with Astro, TypeScript and plain CSS on the same design tokens as the dashboard.
 
 WidgetAI is a product for creating embeddable AI chat widgets for websites. This repository contains only the marketing and landing page that presents the product. The dashboard, backend, embeddable widget runtime, and AI infrastructure are closed source and are not included here.
 
-![WidgetAI landing page preview](src/assets/og-img.png)
+![WidgetAI landing page preview](src/assets/og-img.jpg)
 
 ## Live URLs
 
@@ -17,7 +17,7 @@ This repository includes:
 
 - The public homepage
 - Product messaging and marketing sections
-- Responsive navigation and mobile menu behavior
+- A live demo that talks to a real WidgetAI widget
 - Feature highlights and FAQ content
 - SEO metadata, social sharing tags, structured data, sitemap support, and robots handling
 - Source-managed image assets and public favicon files
@@ -32,23 +32,25 @@ This repository does not include:
 
 ## Features
 
-- Large hero section with product preview and primary calls to action
-- "How it works" section that explains the widget setup flow
-- Feature grid covering installation, customization, domain restrictions, AI configuration, and context control
-- FAQ accordion with product-focused answers
-- Conversion-focused final CTA and footer links
+- Hero built around a night photograph and the visitor's own local time
+- Live demo: the widget's full context beside a chat with the real widget, highlighting the line each answer leans on
+- The real widget in the corner, loaded after the page finishes loading
+- Close-ups of the product's parts, an FAQ written as a conversation, and a copyable install tag
 - Structured data for Organization, WebSite, WebPage, SoftwareApplication, and FAQPage
 - Sitemap integration and canonical URL support
-- Responsive layout across desktop and mobile
+- Responsive layout across desktop, tablet and phone; all content renders without JavaScript
+
+## Performance
+
+- No UI framework at runtime: one ~4 kB script, CSS inlined into the page
+- Self-hosted Inter and JetBrains Mono, with a metric-matched fallback (no layout shift on font swap)
+- Responsive AVIF/WebP images through `astro:assets`; the hero is preloaded with high priority
 
 ## Tech Stack
 
 - Astro 5
-- React 19
 - TypeScript
-- Tailwind CSS v4
-- shadcn/ui
-- Base UI
+- Plain CSS (tokens shared with the dashboard)
 - ESLint
 - Prettier
 
@@ -59,7 +61,8 @@ This repository does not include:
 ├── public/              # Favicons, manifest, and browser-discoverable public files
 ├── src/
 │   ├── assets/          # Landing page images managed by Astro
-│   ├── components/      # React and UI components
+│   ├── components/      # Astro components
+│   ├── scripts/         # Client script for the home page
 │   ├── layouts/         # Shared Astro layout
 │   ├── lib/             # Site config and shared helpers
 │   ├── pages/           # Astro routes
@@ -111,6 +114,8 @@ bun run preview
 ## Configuration
 
 - `SITE_URL` or `PUBLIC_SITE_URL` can be used at build time to override the canonical site URL
+- `PUBLIC_WIDGET_API_URL`, `PUBLIC_WIDGET_ID` and `PUBLIC_DASHBOARD_URL` configure the live widget and dashboard links (defaults are production; see `.env.example`)
+- The demo shows the widget's context from `src/lib/guide-context.ts`; keep the widget in `PUBLIC_WIDGET_ID` set to that exact text
 - Core site metadata lives in `src/lib/site.ts`
 - SEO output is handled through `src/layouts/main.astro` and `@astrojs/sitemap`
 
